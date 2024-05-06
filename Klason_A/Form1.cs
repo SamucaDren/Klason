@@ -230,7 +230,7 @@ namespace Klason_A
             this.Close();
             Thread thread = new Thread(() =>
             {
-                Application.Run(new Pagina_Inicial(i));
+                ///Application.Run(new Pagina_Inicial(i));
             });
             thread.Start();
         }
