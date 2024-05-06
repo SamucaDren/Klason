@@ -13,36 +13,42 @@ namespace Klason_A
 {
     public partial class Form1 : Form
     {
-
+        readonly Cores_Fontes chave = new Cores_Fontes();
+        private int Largura_da_Tela = 1920, Altura_da_Tela = 1080;
         public Form1()
         {
             InitializeComponent();
-            Login_Inicio(AddFundo());
+            
+            Panel Fundo = AddFundo();
+            this.Size = new Size(Largura_da_Tela, Altura_da_Tela);
+            Fundo.Dock = DockStyle.Fill;
+            Login_Inicio(Fundo);
+            this.WindowState = FormWindowState.Maximized;
         }
         private Panel AddFundo()
         {
-            Cores_Fontes chave = new Cores_Fontes();
             Panel Fundo_janela = new Panel();
-            Fundo_janela.Dock = DockStyle.Fill;
             Fundo_janela.BackColor = chave.Azul_Claro;
             Fundo_janela.BackgroundImage = Properties.Resources.InicialBG;
             Fundo_janela.BackgroundImageLayout = ImageLayout.Stretch;
-            Controls.Add(Fundo_janela);
+            this.Controls.Add(Fundo_janela);
             return Fundo_janela;
         }
+
         private void Login_Inicio(Panel Fundo_janela)
         {
+            int t = this.Size.Width;
+            int p = this.Size.Height;
             Fundo_janela.Controls.Clear();
-            Cores_Fontes chave = new Cores_Fontes();
-            this.WindowState = FormWindowState.Maximized;
             int tamanho_do_Botao = 500;
             Panel Centro = new Panel();
             Centro.Size = new Size(tamanho_do_Botao, 350);
-            Fundo_janela.Controls.Add(Centro);
+            
 
-            int centroX = (Fundo_janela.ClientSize.Width - Centro.Size.Width) / 2;
-            int centroY = (Fundo_janela.ClientSize.Height - Centro.Size.Height) / 2;
-            Centro.Location = new Point(centroX, centroY);
+            int centroX = (t-tamanho_do_Botao)/2;
+            int centroY = (p-Centro.Size.Height)/2;
+            Centro.Location = new System.Drawing.Point(centroX, centroY-50);
+            Fundo_janela.Controls.Add(Centro);
 
 
             //Criando Título
@@ -85,9 +91,6 @@ namespace Klason_A
 
         private void login(int i, Panel Fundo_Janela)
         {
-            Cores_Fontes chave = new Cores_Fontes();
-            //Fundo_Janela.Controls.Opacity = 0.5; // Valor entre 0 (totalmente transparente) e 1 (totalmente opaco)
-            //this.Opacity = 0.5;
             // Limpa os controles dentro do Fundo_Janela
             Fundo_Janela.Controls.Clear();
 
@@ -218,14 +221,13 @@ namespace Klason_A
             back.ForClick.Click += (sender, e) => Login_Inicio(Fundo_Janela);
         }
 
-
         private void transiti(int i)
         {
 
             this.Close();
             Thread thread = new Thread(() =>
             {
-                ///Application.Run(new Pagina_Inicial(i));
+                Application.Run(new Pagina_Inicial(i));
             });
             thread.Start();
         }
