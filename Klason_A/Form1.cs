@@ -19,11 +19,6 @@ namespace Klason_A
             InitializeComponent();
             Login_Inicio(AddFundo());
         }
-
-        Cores_Fontes chave = new Cores_Fontes();
-
-
-        private int Largura_da_Tela = 1920, Altura_da_Tela = 1080;
         private Panel AddFundo()
         {
             Cores_Fontes chave = new Cores_Fontes();
