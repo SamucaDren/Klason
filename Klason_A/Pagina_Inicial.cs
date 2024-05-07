@@ -20,11 +20,7 @@ namespace Klason_A
         }
 
         Cores_Fontes chave = new Cores_Fontes();
-        PoupUp P1 = new PoupUp();
-        PoupUp P2 = new PoupUp();
-        PoupUp P3 = new PoupUp();
-        PoupUp P4 = new PoupUp();
-        PoupUp P6 = new PoupUp();
+
         public Pagina_Inicial(int i)
         {
             InitializeComponent();
@@ -182,6 +178,7 @@ namespace Klason_A
         {
 
             PoupUp poup = new PoupUp();
+            poup.Form_Pai = this;
             x.Controls.Add(poup.P);
         }
     }

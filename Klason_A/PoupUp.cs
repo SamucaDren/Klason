@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -10,6 +11,7 @@ namespace Klason_A
 {
     internal class PoupUp
     {
+        Cores_Fontes chave = new Cores_Fontes();
         private RoundedPanel Fundo = new RoundedPanel(40);
         private RoundedPanel Img = new RoundedPanel(38);
         private RoundedPanel pict = new RoundedPanel(30);
@@ -17,6 +19,16 @@ namespace Klason_A
         private Label H2 = new Label();
         private Label preco = new Label();
         RoundedPanel Fundo2 = new RoundedPanel(50);
+        private Form formPai = new Form();
+        private Image imagem_Curso = Properties.Resources.IMGteste;
+
+        public Form Form_Pai
+        {
+            set
+            {
+                formPai = value;
+            }
+        }
 
         public PoupUp()
         {
@@ -25,8 +37,8 @@ namespace Klason_A
 
         public Image Imagem
         {
-            get { return pict.BackgroundImage; }
-            set { pict.BackgroundImage = value; }
+            get { return imagem_Curso; }
+            set { imagem_Curso=value; }
         }
 
         public string NomeMateria
@@ -68,7 +80,7 @@ namespace Klason_A
             Img.Location = new Point(1, 1);
 
             Img.Controls.Add(pict);
-            pict.BackgroundImage = Properties.Resources.IMGteste;
+            pict.BackgroundImage = imagem_Curso;
             pict.BackgroundImageLayout = ImageLayout.Stretch;
             pict.Dock = DockStyle.Fill;
             int p = 20;
@@ -110,11 +122,55 @@ namespace Klason_A
         public void Abre_Curso()
         {
             Form Curso = new Form();
-            Curso.Size = new Size(1046, 779);
-            Curso.ShowInTaskbar = false;
-            Curso.MaximumSize = new Size(1046, 779);
-
-            Curso.ShowDialog();
+            curso_aberto(Curso);
+           
         }
+
+        public void curso_aberto(Form janela)
+        {
+            //formPai.Opacity = 0.5;
+            
+            janela.Size = new Size(900, 700);
+            janela.MaximumSize = new Size(900, 700); ;
+            janela.ShowInTaskbar = false;
+            janela.FormBorderStyle = FormBorderStyle.None;
+            janela.StartPosition = FormStartPosition.CenterParent;
+            janela.BackColor = chave.Azul_Claro;
+            Button Fechar = new Button();
+            RoundedPanel Fundo = new RoundedPanel(50);
+            janela.Controls.Add(Fundo);
+            Fundo.Dock = DockStyle.Fill;
+            Fundo.BackColor = Color.White;
+            
+            janela.FormClosed += (senders, e) => formPai.Opacity = 1;
+
+            RoundedPanel imagem = new RoundedPanel(30);
+            imagem.BackgroundImage = imagem_Curso;
+            imagem.Size = new Size(janela.Width - 100, 300);
+            Fundo.Controls.Add(imagem);
+            imagem.Location = new Point(40, 40);
+            imagem.BackgroundImageLayout = ImageLayout.Stretch;
+
+            RoundedPanel back = new RoundedPanel(40);
+            back.Size = new Size(40, 40);
+            back.Controls.Add(Fechar);
+            
+            Fechar.Dock = DockStyle.Fill;
+            Fechar.FlatStyle = FlatStyle.Flat;
+            Fechar.FlatAppearance.BorderSize = 0;
+            
+            Fechar.Click += (senders, e) => janela.Close();
+            Fechar.Text = "<";
+            Fechar.Font = chave.H3_Font_Sub;
+            Fechar.ForeColor = chave.Preto;
+            imagem.Controls.Add(back);
+            back.Location = new Point(10, 10);
+
+
+            janela.ShowDialog();
+            
+        }
+
+
     }
 }
