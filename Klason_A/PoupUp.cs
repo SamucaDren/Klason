@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Klason_A
 {
@@ -21,6 +22,7 @@ namespace Klason_A
         RoundedPanel Fundo2 = new RoundedPanel(50);
         private Form formPai = new Form();
         private Image imagem_Curso = Properties.Resources.IMGteste;
+        private string descricao = "É com grande entusiasmo que convidamos vocês para se juntarem a nós em uma jornada fascinante pelo cosmos na nossa próxima aula de astronomia! vamos explorar os mistérios do universo e desvendar seus segredos mais profundos.";
 
         public Form Form_Pai
         {
@@ -51,6 +53,15 @@ namespace Klason_A
         {
             get { return H2.Text; }
             set { H2.Text = value; }
+        }
+
+        public string Descricao
+        {
+            get
+            {
+                return descricao;
+            }
+            set { descricao = value; }
         }
 
         double Valor
@@ -128,10 +139,11 @@ namespace Klason_A
 
         public void curso_aberto(Form janela)
         {
-            //formPai.Opacity = 0.5;
-            
-            janela.Size = new Size(900, 700);
-            janela.MaximumSize = new Size(900, 700); ;
+            Size TamTab = new Size(900, 700 + 50);
+            int pdi = 40;
+
+            janela.Size = TamTab;
+            janela.MaximumSize = TamTab; ;
             janela.ShowInTaskbar = false;
             janela.FormBorderStyle = FormBorderStyle.None;
             janela.StartPosition = FormStartPosition.CenterParent;
@@ -141,35 +153,187 @@ namespace Klason_A
             janela.Controls.Add(Fundo);
             Fundo.Dock = DockStyle.Fill;
             Fundo.BackColor = Color.White;
-            
+
             janela.FormClosed += (senders, e) => formPai.Opacity = 1;
 
             RoundedPanel imagem = new RoundedPanel(30);
             imagem.BackgroundImage = imagem_Curso;
-            imagem.Size = new Size(janela.Width - 100, 300);
+            imagem.Size = new Size(janela.Width - pdi*2, 300);
             Fundo.Controls.Add(imagem);
-            imagem.Location = new Point(40, 40);
+            imagem.Location = new Point(pdi, pdi);
             imagem.BackgroundImageLayout = ImageLayout.Stretch;
 
             RoundedPanel back = new RoundedPanel(40);
             back.Size = new Size(40, 40);
             back.Controls.Add(Fechar);
-            
+
             Fechar.Dock = DockStyle.Fill;
             Fechar.FlatStyle = FlatStyle.Flat;
             Fechar.FlatAppearance.BorderSize = 0;
-            
+
             Fechar.Click += (senders, e) => janela.Close();
             Fechar.Text = "<";
             Fechar.Font = chave.H3_Font_Sub;
             Fechar.ForeColor = chave.Preto;
             imagem.Controls.Add(back);
-            back.Location = new Point(10, 10);
+            back.Location = new Point(pdi/2, pdi/2);
 
+
+            Label H1 = new Label();
+            Fundo.Controls.Add(H1);
+            H1.Text = this.H1.Text;
+            H1.Font = chave.H1_Font;
+            H1.ForeColor = chave.Preto;
+            H1.Location = new Point(pdi-20, imagem.Location.Y + imagem.Height + pdi);
+            H1.AutoSize = true;
+
+            Label H2 = new Label();
+            Fundo.Controls.Add(H2);
+            H2.Text = this.H2.Text;
+            H2.Font = chave.H3_Font_Sub;
+            H2.AutoSize = true;
+            H2.ForeColor = chave.Cinza;
+            H2.Location = new Point(pdi - 10, H1.Location.Y+H1.Height+50);
+
+            Label H3 = new Label();
+            Fundo.Controls.Add(H3);
+            H3.Text = descricao;
+            H3.Size = new Size(480, 80);
+            H3.Font = chave.H3_Font;
+            H3.ForeColor = chave.Cinza;
+            H3.Location = new Point(pdi - 10, H2.Location.Y + pdi-10);
+
+
+            Botao Disp = new Botao(Fundo, "AGENDAR AULA");
+            Fundo.Controls.Add(Disp.Caixa_Botao);
+            Disp.Caixa_Botao.Size = new Size(480, 60);
+            Disp.Caixa_Botao.BackColor = chave.Verde;
+            Disp.ForClick.BackColor = chave.Verde;
+            Disp.ForClick.ForeColor = Color.White;
+            Disp.Caixa_Botao.Location = new Point(50-10, H3.Location.Y+H3.Height+pdi);
+            
+            RoundedPanel Horas = new RoundedPanel(40);
+            FlowLayoutPanel horarios = new FlowLayoutPanel();
+            Horas.Controls.Add(horarios);
+            Fundo.Controls.Add(Horas);
+            horarios.Dock = DockStyle.Fill;
+            int lr = imagem.Width - (Disp.Caixa_Botao.Location.X + Disp.Caixa_Botao.Width);
+            Horas.Size = new Size(lr+20, 280);
+            Horas.Location = new Point(Disp.Caixa_Botao.Location.X-20 + Disp.Caixa_Botao.Width + pdi, Disp.Caixa_Botao.Location.Y+Disp.Caixa_Botao.Height-Horas.Height);
+            horarios.BackColor = Color.White;
+            cria_horario(horarios, 20, "Março", "18h", "21h");
+
+            imagem.Click += (sender, e) =>
+            {
+                try
+                {
+                    using (SaveFileDialog nova = new SaveFileDialog())
+                    {
+                        // Define as extensões de arquivo permitidas
+                        nova.Filter = "Imagens JPEG|*.jpg|Imagens PNG|*.png|Todos os Arquivos|*.*";
+
+                        // Exibe o diálogo de salvamento e verifica se o usuário clicou em "OK"
+                        if (nova.ShowDialog() == DialogResult.OK)
+                        {
+                            // Verifica se o arquivo selecionado tem uma extensão de imagem válida
+                            if (nova.FileName.EndsWith(".jpg") || nova.FileName.EndsWith(".jpeg") || nova.FileName.EndsWith(".png"))
+                            {
+                                // Carrega a imagem do arquivo selecionado
+                                imagem_Curso = Image.FromFile(nova.FileName);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Por favor, selecione um arquivo de imagem válido.");
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ocorreu um erro: " + ex.Message);
+                }
+            };
 
             janela.ShowDialog();
-            
+
         }
+
+        private void cria_horario(FlowLayoutPanel X, int Dia, string Mes, string HoraI, string HoraF)
+        {
+            RoundedPanel Fundo = new RoundedPanel(20);
+            Fundo.Size = new Size(X.Width, 100);
+            Fundo.BackColor = chave.CinzaClaro;
+            X.Controls.Add(Fundo);
+            Panel icon = new Panel();
+            icon.BackgroundImage = Properties.Resources.Hora;
+            icon.Size = new Size(30, 30);
+            icon.BackgroundImageLayout = ImageLayout.Stretch;
+            Fundo.Controls.Add(icon);
+            icon.Location = new Point(20, 100 / 2 - 30 / 2);
+            int i = 0;
+
+            Label H1 = new Label();
+            H1.Text = "Dia " + Dia + " de " + Mes + " | das " + HoraI + " às " + HoraF;
+            H1.Font = chave.H4_Font;
+            H1.AutoSize = true;
+            Fundo.Controls.Add(H1);
+            H1.Location = new Point(icon.Location.X+40,100/2-H1.Height/2);
+            H1.ForeColor = chave.Cinza;
+
+
+            Fundo.Click += (senders, e) =>
+            {
+                if (i == 0)
+                {
+                    H1.ForeColor = Color.White;
+                    Fundo.BackColor = chave.Verde;
+                    icon.BackgroundImage = Properties.Resources.Check;
+                    i= 1;
+                }
+                else
+                {
+                    H1.ForeColor = chave.Cinza;
+                    Fundo.BackColor = chave.CinzaClaro;
+                    icon.BackgroundImage = Properties.Resources.Hora;
+                    i = 0;
+                }
+            };
+            H1.Click += (senders, e) =>
+            {
+                if (i == 0)
+                {
+                    H1.ForeColor = Color.White;
+                    Fundo.BackColor = chave.Verde;
+                    icon.BackgroundImage = Properties.Resources.Check;
+                    i = 1;
+                }
+                else
+                {
+                    H1.ForeColor = chave.Cinza;
+                    Fundo.BackColor = chave.CinzaClaro;
+                    icon.BackgroundImage = Properties.Resources.Hora;
+                    i = 0;
+                }
+            };
+            icon.Click += (senders, e) =>
+            {
+                if (i == 0)
+                {
+                    H1.ForeColor = Color.White;
+                    Fundo.BackColor = chave.Verde;
+                    icon.BackgroundImage = Properties.Resources.Check;
+                    i = 1;
+                }
+                else
+                {
+                    H1.ForeColor = chave.Cinza;
+                    Fundo.BackColor = chave.CinzaClaro;
+                    icon.BackgroundImage = Properties.Resources.Hora;
+                    i = 0;
+                }
+            };
+
+        } 
 
 
     }
