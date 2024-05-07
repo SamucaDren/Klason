@@ -29,4 +29,31 @@ namespace Klason_A
             this.Region = new Region(path);
         }
     }
+
+    public partial class FormArredondado : Form
+    {
+        public FormArredondado()
+        {
+            this.Paint += new PaintEventHandler(DesenharBordasArredondadas);
+        }
+
+        private void DesenharBordasArredondadas(object sender, PaintEventArgs e)
+        {
+            Graphics graphics = e.Graphics;
+            Rectangle bounds = this.ClientRectangle;
+            int radius = 50;
+            using (GraphicsPath path = new GraphicsPath())
+            {
+                path.AddArc(bounds.X, bounds.Y, radius, radius, 180, 90); // Canto superior esquerdo
+                path.AddArc(bounds.X + bounds.Width - radius, bounds.Y, radius, radius, 270, 90); // Canto superior direito
+                path.AddArc(bounds.X + bounds.Width - radius, bounds.Y + bounds.Height - radius, radius, radius, 0, 90); // Canto inferior direito
+                path.AddArc(bounds.X, bounds.Y + bounds.Height - radius, radius, radius, 90, 90); // Canto inferior esquerdo
+                path.CloseFigure();
+
+                // Preenche o formulário com a cor de fundo
+                graphics.FillPath(new SolidBrush(this.BackColor), path);
+                this.Region = new Region(path);
+            }
+        }
+    }
 }

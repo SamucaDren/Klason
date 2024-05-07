@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
@@ -132,12 +133,12 @@ namespace Klason_A
 
         public void Abre_Curso()
         {
-            Form Curso = new Form();
+            FormArredondado Curso = new FormArredondado();
             curso_aberto(Curso);
            
         }
 
-        public void curso_aberto(Form janela)
+        public void curso_aberto(FormArredondado janela)
         {
             Size TamTab = new Size(900, 700 + 50);
             int pdi = 40;
@@ -147,7 +148,7 @@ namespace Klason_A
             janela.ShowInTaskbar = false;
             janela.FormBorderStyle = FormBorderStyle.None;
             janela.StartPosition = FormStartPosition.CenterParent;
-            janela.BackColor = chave.Azul_Claro;
+            janela.BackColor = chave.Vermelho;
             Button Fechar = new Button();
             RoundedPanel Fundo = new RoundedPanel(50);
             janela.Controls.Add(Fundo);
@@ -222,39 +223,15 @@ namespace Klason_A
             Horas.Location = new Point(Disp.Caixa_Botao.Location.X-20 + Disp.Caixa_Botao.Width + pdi, Disp.Caixa_Botao.Location.Y+Disp.Caixa_Botao.Height-Horas.Height);
             horarios.BackColor = Color.White;
             cria_horario(horarios, 20, "Março", "18h", "21h");
+            SaveFileDialog nova = new SaveFileDialog();
 
-            imagem.Click += (sender, e) =>
+            Thread t = new Thread(() =>
             {
-                try
-                {
-                    using (SaveFileDialog nova = new SaveFileDialog())
-                    {
-                        // Define as extensões de arquivo permitidas
-                        nova.Filter = "Imagens JPEG|*.jpg|Imagens PNG|*.png|Todos os Arquivos|*.*";
-
-                        // Exibe o diálogo de salvamento e verifica se o usuário clicou em "OK"
-                        if (nova.ShowDialog() == DialogResult.OK)
-                        {
-                            // Verifica se o arquivo selecionado tem uma extensão de imagem válida
-                            if (nova.FileName.EndsWith(".jpg") || nova.FileName.EndsWith(".jpeg") || nova.FileName.EndsWith(".png"))
-                            {
-                                // Carrega a imagem do arquivo selecionado
-                                imagem_Curso = Image.FromFile(nova.FileName);
-                            }
-                            else
-                            {
-                                MessageBox.Show("Por favor, selecione um arquivo de imagem válido.");
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Ocorreu um erro: " + ex.Message);
-                }
-            };
-
-            janela.ShowDialog();
+                janela.StartPosition = FormStartPosition.CenterScreen;
+                janela.ShowDialog();
+            });
+            t.Start();
+            FormEscurecerTela(janela);
 
         }
 
@@ -333,8 +310,20 @@ namespace Klason_A
                 }
             };
 
-        } 
+        }
+        public void FormEscurecerTela( Form po)
+        {
+            Form es = new Form();
+            es.FormBorderStyle = FormBorderStyle.None;
+            es.BackColor = Color.Black;
+            es.Opacity = 0.5; // Opacidade de 50%
+            es.WindowState = FormWindowState.Maximized;
+            po.FormClosing += (sender, e) =>
+            {
+                es.Close();
+            };
+            es.ShowDialog();
 
-
+        }
     }
 }
