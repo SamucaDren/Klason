@@ -165,6 +165,7 @@ namespace Klason_A
             Fundo_Galeria.Size = new Size(1155 + 20, 620 + 20);
             Fundo_Galeria.AutoScroll = true;
             Fundo_Galeria.VerticalScroll.Visible = false;
+            Fundo_Galeria.HorizontalScroll.Visible = false;
 
             FlowLayoutPanel Scrool = new FlowLayoutPanel();
             Fundo_Galeria.Controls.Add(Scrool);
