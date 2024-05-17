@@ -30,6 +30,25 @@ namespace Klason_A
         }
     }
 
+    public class BotaoArredondado : Button
+    {
+        public int _radius = 1;
+
+        public int Radius { get { return _radius; } set { _radius = value; } }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            GraphicsPath path = new GraphicsPath();
+            path.AddArc(0, 0, _radius, _radius, 180, 90);
+            path.AddArc(Width - _radius, 0, _radius, _radius, 270, 90);
+            path.AddArc(Width - _radius, Height - _radius, _radius, _radius, 0, 90);
+            path.AddArc(0, Height - _radius, _radius, _radius, 90, 90);
+            path.CloseFigure();
+            this.Region = new Region(path);
+        }
+    }
+
     public partial class FormArredondado : Form
     {
         public FormArredondado()
@@ -56,4 +75,5 @@ namespace Klason_A
             }
         }
     }
+   
 }

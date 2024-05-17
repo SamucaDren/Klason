@@ -125,6 +125,8 @@ namespace Klason_A
         public void Notificacoes(Panel Fundo_Janela)
         {
             Panel Parte_Info = new Panel();
+            Label NotName = new Label();
+
             //Parte_Info.Dock = DockStyle.Left;
             Fundo_Janela.Controls.Add(Parte_Info);
             Parte_Info.Size = new Size(1920 - 1220 - 400, 1000);
@@ -143,6 +145,18 @@ namespace Klason_A
             path.CloseFigure();
             Parte_Info.Region = new Region(path);
             Parte_Info.BackColor = Color.White;
+
+            Panel AreaNot = new Panel();
+            NotName.Font = chave.H2_Font;
+            NotName.ForeColor = chave.Preto;
+            Parte_Info.Controls.Add(NotName);
+            Parte_Info.Controls.Add(AreaNot);
+            NotName.Location = new Point(20, 40);
+            NotName.Text = "Notificações";
+            NotName.AutoSize = true;
+            AreaNot.Location = new Point(20, NotName.Location.Y + NotName.Height + 20);
+            AreaNot.Size = new Size(Parte_Info.Width-40, Parte_Info.Height-AreaNot.Location.X);
+            AreaNot.BackColor = chave.Azul_Claro;
 
         }
         public void Galeria(Panel Fundo_Janela)

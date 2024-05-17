@@ -10,12 +10,9 @@ namespace Klason_A
 {
     internal class Caixa_de_Texto
     {
-
+        Cores_Fontes chave = new Cores_Fontes();
         private RoundedPanel Fundo_Texto = new RoundedPanel(42);
         private TextBox textBox1 = new TextBox();
-        private Color Cor_Fundo = new Color();
-        private Color Cor_Letra = new Color();
-        private FontDialog Fonte = new FontDialog();
 
         public Caixa_de_Texto(int Largura, int X, int Y, ref Panel panel)
         {
@@ -29,31 +26,33 @@ namespace Klason_A
                 return Fundo_Texto;
             }
         }
+        public string Text
+        {
+            get { return textBox1.Text; }
+            set { textBox1.Text = value; }
+        }
 
         public void Altera_Cor(Color NovaCor)
         {
             textBox1.BackColor = NovaCor;
             Fundo_Texto.BackColor = NovaCor;
         }
-
-
         private void Criar(int Largura, int X, int Y)
         {
-            Cor_Fundo = Color.White;
-            Cor_Letra = Color.FromArgb(153, 153, 153);
-            Fonte.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Fundo_Texto.BackColor = Cor_Fundo;
+
+            Fundo_Texto.BackColor = chave.Branco;
             Fundo_Texto.Controls.Add(textBox1);
             Fundo_Texto.Size = new Size(Largura, 45);
             Fundo_Texto.TabIndex = 1;
 
+
             textBox1.AcceptsReturn = true;
             textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            textBox1.BackColor = Cor_Fundo;
+            textBox1.BackColor = chave.Branco;
             textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = Fonte.Font;
-            textBox1.ForeColor = Cor_Letra;
-            Fundo_Texto.Location = new Point(X, Y);
+            textBox1.Font = chave.H3_Font;
+            textBox1.ForeColor = chave.Preto;
+            
             textBox1.Location = new Point(20, 13);
             textBox1.Margin = new Padding(10);
             textBox1.Size = new Size(Largura - 20, 23);
