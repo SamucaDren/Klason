@@ -14,6 +14,7 @@ namespace Klason_A
 {
     public partial class Pagina_Inicial : Form
     {
+        Panel AreaNot;
         public Pagina_Inicial()
         {
             InitializeComponent();
@@ -75,6 +76,7 @@ namespace Klason_A
             Caixa_de_Texto pesquisa = new Caixa_de_Texto(500, 40, 50 - 20, ref Parte_Info);
             pesquisa.Altera_Cor(chave.CinzaClaro);
             pesquisa.Caixa.Size = new Size(500, 40);
+            pesquisa.Caixa.Location = new Point(28, Parte_Info.Height / 2 - pesquisa.Caixa.Height / 2);
 
             RoundedPanel Perfil = new RoundedPanel(40);
             Perfil.Size = new Size(38, 38);
@@ -117,7 +119,7 @@ namespace Klason_A
 
 
 
-
+            
             // Adicione a barra de fundo ao Fundo_Janela
             Fundo_Janela.Controls.Add(Fundo_Barra);
 
@@ -146,7 +148,7 @@ namespace Klason_A
             Parte_Info.Region = new Region(path);
             Parte_Info.BackColor = Color.White;
 
-            Panel AreaNot = new Panel();
+            AreaNot = new Panel();
             NotName.Font = chave.H2_Font;
             NotName.ForeColor = chave.Preto;
             Parte_Info.Controls.Add(NotName);
@@ -156,7 +158,9 @@ namespace Klason_A
             NotName.AutoSize = true;
             AreaNot.Location = new Point(20, NotName.Location.Y + NotName.Height + 20);
             AreaNot.Size = new Size(Parte_Info.Width-40, Parte_Info.Height-AreaNot.Location.X);
-            AreaNot.BackColor = chave.Azul_Claro;
+            //AreaNot.BackColor = chave.Azul_Claro;
+            AreaNot.Height = Fundo_Janela.Height +180;
+            AreaNot.AutoScroll = true;
 
         }
         public void Galeria(Panel Fundo_Janela)
@@ -195,6 +199,13 @@ namespace Klason_A
             PoupUp poup = new PoupUp();
             poup.Form_Pai = this;
             x.Controls.Add(poup.P);
+
+            Notf n = new Notf();
+            Panel y = new Panel();
+            y.Height = 10;
+            y.Dock = DockStyle.Top;
+            AreaNot.Controls.Add(y);
+           AreaNot.Controls.Add(n.Fundo);
         }
     }
 }

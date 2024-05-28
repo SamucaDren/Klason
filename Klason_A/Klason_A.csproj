@@ -57,6 +57,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Notf.cs" />
     <Compile Include="Pagina_Inicial.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Group 57Notify.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

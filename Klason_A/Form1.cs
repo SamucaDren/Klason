@@ -153,11 +153,6 @@ namespace Klason_A
             Panel Centro = new Panel();
             Centro.Size = new Size(tamanho_do_Botao, 600);
 
-           
-            
-
-            
-
             //Criando Título
             Label H1 = new Label();
             H1.Text = "Olá ";

@@ -19,7 +19,9 @@ namespace Klason_A
         public Color Branco { get { return Color.FromArgb(255, 255, 255); } }
 
         public Color CinzaClaro { get { return Color.FromArgb(240, 240, 240); } }
+        public Font H1_Notificacao { get { return new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
 
+        public Font H2_Notificacao { get { return new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0); } }
         public Font H3_Font { get { return new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0); } }
         public Font H1_Font { get { return new Font("Arial", 36F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
         public Font H2_Font { get { return new Font("Arial", 20F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
