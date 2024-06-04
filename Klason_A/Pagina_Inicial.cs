@@ -15,6 +15,8 @@ namespace Klason_A
     public partial class Pagina_Inicial : Form
     {
         Panel AreaNot;
+        private Panel fundo = new Panel();
+
         public Pagina_Inicial()
         {
             InitializeComponent();
@@ -26,7 +28,7 @@ namespace Klason_A
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
-            Panel fundo = chave.AddFundo(this);
+            fundo = chave.AddFundo(this);
             fundo.Size = new Size(1920, 1080);
             Controls.Add(fundo);
 
@@ -47,81 +49,14 @@ namespace Klason_A
         }
         public void Barra(Panel Fundo_Janela, int i)
         {
-            // Crie um novo painel para a barra de fundo
-            Panel Fundo_Barra = new Panel();
-            Fundo_Barra.Dock = DockStyle.Top;
-            Fundo_Barra.Size = new Size(1920, 100);
-
-            // Crie painéis para a parte do logo e a parte da informação
-            Panel Parte_Logo = new Panel();
-            Panel Parte_Info = new Panel();
-            Parte_Info.Size = new Size(1220, 100);
-            Parte_Logo.Size = new Size(200, 100);
-
-            GraphicsPath path = new GraphicsPath();
-            int radius = 80;
-
-            path.AddLine(0, 0, Parte_Info.Width, 0);
-            path.AddLine(Parte_Info.Width, 0, Parte_Info.Width, Parte_Info.Height);
-            path.AddLine(Parte_Info.Width, Parte_Info.Height, 0, Parte_Info.Height);
-            path.AddArc(0, Parte_Info.Height - radius, radius, radius, 90, 90);
-            path.CloseFigure();
-
-            Parte_Info.Region = new Region(path);
-            Parte_Info.BackColor = Color.White;
-            Parte_Info.Dock = DockStyle.Right;
-            // Adicione os painéis à barra de fundo
-            Fundo_Barra.Controls.Add(Parte_Logo);
-            Fundo_Barra.Controls.Add(Parte_Info);
-            Caixa_de_Texto pesquisa = new Caixa_de_Texto(500, 40, 50 - 20, ref Parte_Info);
-            pesquisa.Altera_Cor(chave.CinzaClaro);
-            pesquisa.Caixa.Size = new Size(500, 40);
-            pesquisa.Caixa.Location = new Point(28, Parte_Info.Height / 2 - pesquisa.Caixa.Height / 2);
-
-            RoundedPanel Perfil = new RoundedPanel(40);
-            Perfil.Size = new Size(38, 38);
-            Perfil.BackgroundImage = Properties.Resources.Perfil;
-            Perfil.BackgroundImageLayout = ImageLayout.Stretch;
-            Parte_Info.Controls.Add(Perfil);
-            Perfil.Location = new Point(Parte_Info.Width - 80, 100 / 2 - 38 / 2);
-
-            Panel info = new Panel();
-            info.Size = new Size(26, 26);
-            info.BackgroundImage = Properties.Resources.Info;
-            info.BackgroundImageLayout = ImageLayout.Stretch;
-            Parte_Info.Controls.Add(info);
-            info.Location = new Point(Parte_Info.Width - 160, 100 / 2 - 28 / 2);
-
-
-            Label area = new Label();
-            area.Text = "Área do ";
-            if (i == 1)
-            {
-                area.Text += "Aluno";
-            }
-            else if (i == 2)
-            {
-                area.Text += "Professor";
-            }
-            area.Font = chave.H3_Font_Sub;
-            area.AutoSize = true;
-            area.ForeColor = chave.Preto;
-
-            Parte_Info.Controls.Add(area);
-            area.Location = new Point(Parte_Info.Width - 220 - area.Width, 100 / 2 - area.Height / 2);
-
-            Panel Logo = new Panel();
-            Logo.BackgroundImage = Properties.Resources.Retângulo_2;
-            Logo.BackgroundImageLayout = ImageLayout.Stretch;
-            Logo.Size = new Size(150, 25);
-            Parte_Logo.Controls.Add(Logo);
-            Logo.Location = new Point(Parte_Logo.Width / 2 - Logo.Width / 2, Parte_Logo.Height / 2 - Logo.Height / 2);
-
-
+            barra superior = new barra(i, this);
 
             
             // Adicione a barra de fundo ao Fundo_Janela
-            Fundo_Janela.Controls.Add(Fundo_Barra);
+            fundo.Controls.Add(superior.Fundo);
+            //superior.Fundo.Location = new Point(0, 0);
+            superior.Fundo.BringToFront();
+            
 
         }
         public void Notificacoes(Panel Fundo_Janela)
@@ -129,7 +64,7 @@ namespace Klason_A
             Panel Parte_Info = new Panel();
             Label NotName = new Label();
 
-            //Parte_Info.Dock = DockStyle.Left;
+            //_parte_Info.Dock = DockStyle.Left;
             Fundo_Janela.Controls.Add(Parte_Info);
             Parte_Info.Size = new Size(1920 - 1220 - 400, 1000);
             Parte_Info.Location = new Point(0, 100 + 40);
@@ -199,6 +134,8 @@ namespace Klason_A
             PoupUp poup = new PoupUp();
             poup.Form_Pai = this;
             x.Controls.Add(poup.P);
+            x.Name = "Teste";
+            
 
             Notf n = new Notf();
             Panel y = new Panel();

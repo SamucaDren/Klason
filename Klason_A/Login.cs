@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Dominio;
 
 namespace Klason_A
 {
-    public partial class Form1 : Form
+    public partial class Login : Form
     {
         Panel Fundo_janela;//fundo da janela
         private Panel _coluna01;//coluna Login01
@@ -24,7 +25,7 @@ namespace Klason_A
         private int tamanho_do_Botao = 500;
 
 
-        public Form1()
+        public Login()
         {
             InitializeComponent();
             

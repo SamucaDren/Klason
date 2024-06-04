@@ -135,7 +135,7 @@ namespace Klason_A.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Perfil {
             get {
-                object obj = ResourceManager.GetObject("Perfil", resourceCulture);
+                object obj = ResourceManager.GetObject("_perfil", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

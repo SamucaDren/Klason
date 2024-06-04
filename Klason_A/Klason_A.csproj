@@ -46,16 +46,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conexao.cs" />
+    <Compile Include="Dominio\Aluno.cs" />
+    <Compile Include="barra.cs" />
     <Compile Include="Bordas_Arredondadas.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Botao.cs" />
     <Compile Include="Cores_Fontes.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Dominio\Curso.cs" />
+    <Compile Include="Dominio\Professor.cs" />
+    <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
     </Compile>
     <Compile Include="Notf.cs" />
     <Compile Include="Pagina_Inicial.cs">
@@ -67,8 +72,10 @@
     <Compile Include="PoupUp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Repositorios\AlunoRepositorio.cs" />
+    <Compile Include="Repositorios\RepositorioPadrao.cs" />
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pagina_Inicial.resx">
       <DependentUpon>Pagina_Inicial.cs</DependentUpon>
