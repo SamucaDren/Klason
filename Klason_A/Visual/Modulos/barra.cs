@@ -20,6 +20,7 @@ namespace Klason_A
         private Panel _info = new Panel();
         private Panel _logo = new Panel();
         private Label _area = new Label();
+        private int info_op = 0;
 
         Form _form;
 
@@ -83,9 +84,22 @@ namespace Klason_A
             _parte_Info.Controls.Add(_info);
             _info.Location = new Point(ParteInfo.Width - 160, 100 / 2 - 28 / 2);
 
-            _info.MouseHover += (s, e) =>
+            _info.Click += (s, e) =>
             {
-                AbreInfo();
+                if(info_op == 0)
+                {
+                    info_op = 1;
+                    AbreInfo();
+                }
+                else
+                {
+                    _fundoInfo.Visible = false;
+                    _fundoInfo = null;
+                    _form.Controls.Remove(_fundoInfo);
+                    info_op = 0;
+                }
+                
+
             };
             
             _area.Text = "Área do ";
@@ -114,24 +128,60 @@ namespace Klason_A
 
         private void AbreInfo()
         {
-            
+            _fundoInfo = new RoundedPanel(40);
+            _fundoInfo.Visible = true;
 
-            _form.Enabled = true;
-            _fundoInfo = new RoundedPanel(20);
             _fundoInfo.Height = 400;
-            _fundoInfo.Width = 200;
+            _fundoInfo.Width = 250;
 
+            _fundoInfo.BorderStyle = BorderStyle.None;
             _form.Controls.Add(_fundoInfo);
             _fundoInfo.Location = new Point(Cursor.Position.X-_fundoInfo.Width/2, Cursor.Position.Y);
-            _fundoInfo.BackColor = Color.Beige;
+            _fundoInfo.BackColor = chave.CinzaClaro;
             _fundoInfo.BringToFront();
 
-            _fundoInfo.MouseLeave += (s, e) =>
+
+            //_fundoInfo.
+
+            _fundoInfo.Click += (s, e) =>
             {
-                _form.Controls.Remove(_fundoInfo);
+                
                 //_form.Controls.Remove(x);
                 //_fundoInfo.Visible = false;
             };
+            Panel logo = new Panel();
+            logo.BackgroundImage = Properties.Resources.Retângulo_2;
+            logo.Size = new Size(150, 25);
+            logo.BackgroundImageLayout = ImageLayout.Stretch;
+
+            _fundoInfo.Controls.Add(logo);
+            logo.Location = new Point(_fundoInfo.Width / 2 - logo.Width / 2, 20);
+
+            Panel opcoe = new Panel();
+            opcoe.BackColor = Color.Transparent;
+            opcoe.Width = _fundoInfo.Width-40;
+            opcoe.Height = 310;
+
+            opcoe.Location = new Point(20, logo.Location.Y+logo.Height+20);
+
+            _fundoInfo.Controls.Add(opcoe);
+
+            BotaoArredondado matriculados = new BotaoArredondado();
+            matriculados.Text = "Cursos Matriculados";
+            matriculados.Dock = DockStyle.Top;
+            matriculados.Height = 50;
+            matriculados.Font = chave.H4_Font;
+            matriculados.FlatAppearance.BorderSize = 0;
+            matriculados.FlatStyle = FlatStyle.Flat;
+            matriculados.BackColor = chave.CinzaClaro;
+
+            opcoe.Controls.Add(matriculados);
+
+
+
+
+
+
         }
 
         private void x()

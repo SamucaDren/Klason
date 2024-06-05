@@ -9,10 +9,24 @@ using System.Windows.Forms;
 
 namespace Klason_A
 {
+
+
+    public class Flow : FlowLayoutPanel
+    {
+        public Flow()
+        {
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.UpdateStyles();
+        }
+    }
     public class RoundedPanel : Panel
     {
         public int Radius = new int();
-        public RoundedPanel(int R) { Radius = R; }
+        public RoundedPanel(int R) { Radius = R; DoubleBufferedPanel(); }
+
 
 
         public int R { get { return Radius; } set { Radius = value; } }
@@ -28,6 +42,16 @@ namespace Klason_A
             path.CloseFigure();
             this.Region = new Region(path);
         }
+
+        public void DoubleBufferedPanel()
+        {
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.UpdateStyles();
+        }
+
     }
 
     public class BotaoArredondado : Button

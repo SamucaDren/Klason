@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Dominio;
+using Klason_A.Dominio;
 
 namespace Klason_A
 {
@@ -16,10 +18,17 @@ namespace Klason_A
     {
         Panel AreaNot;
         private Panel fundo = new Panel();
+        Flow Scrool = new Flow();
 
         public Pagina_Inicial()
         {
             InitializeComponent();
+
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.UpdateStyles();
         }
 
         Cores_Fontes chave = new Cores_Fontes();
@@ -44,7 +53,8 @@ namespace Klason_A
 
         private void Pagina_Inicial_Load(object sender, EventArgs e)
         {
-
+            
+            
 
         }
         public void Barra(Panel Fundo_Janela, int i)
@@ -120,21 +130,22 @@ namespace Klason_A
             Fundo_Galeria.VerticalScroll.Visible = false;
             Fundo_Galeria.HorizontalScroll.Visible = false;
 
-            FlowLayoutPanel Scrool = new FlowLayoutPanel();
+            //Scrool = new FlowLayoutPanel();
             Fundo_Galeria.Controls.Add(Scrool);
             Scrool.VerticalScroll.Visible = false;
             Scrool.Dock = DockStyle.Top;
             Scrool.AutoSize = true;
+            x();
             teste.Click += (senders, e) => testepoup(Scrool);
 
         }
         private void testepoup(FlowLayoutPanel x)
         {
 
-            PoupUp poup = new PoupUp();
-            poup.Form_Pai = this;
-            x.Controls.Add(poup.P);
-            x.Name = "Teste";
+            //PoupUp poup = new PoupUp();
+            //poup.Form_Pai = this;
+            //x.Controls.Add(poup.P);
+            ////x.Name = "Teste";
             
 
             Notf n = new Notf();
@@ -143,6 +154,17 @@ namespace Klason_A
             y.Dock = DockStyle.Top;
             AreaNot.Controls.Add(y);
            AreaNot.Controls.Add(n.Fundo);
+        }
+        private void x()
+        {
+            foreach (Curso c in Program._cursos)
+            {
+                PoupUp cursox = new PoupUp(c);
+                cursox.NomeMateria = c.Categoria;
+                cursox.Descricao = c.Descricao;
+                cursox.Form_Pai = this;
+                Scrool.Controls.Add(cursox.P);
+            }
         }
     }
 }

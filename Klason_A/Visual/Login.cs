@@ -23,12 +23,20 @@ namespace Klason_A
         readonly Cores_Fontes chave = new Cores_Fontes();
         private int Largura_da_Tela = 1920, Altura_da_Tela = 1080;
         private int tamanho_do_Botao = 500;
+        Caixa_de_Texto login1;
+        Caixa_de_Texto login2;
 
 
         public Login()
         {
             InitializeComponent();
-            
+
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.UpdateStyles();
+
             AddFundo();
             this.Size = new Size(Largura_da_Tela, Altura_da_Tela);
 
@@ -177,8 +185,8 @@ namespace Klason_A
             H2.ForeColor = chave.Preto;
 
             //Craiando caixas de texto
-            Caixa_de_Texto login1 = new Caixa_de_Texto(tamanho_do_Botao, Largura_da_Tela / 2 - (tamanho_do_Botao / 2), Altura_da_Tela / 2, ref Centro);
-            Caixa_de_Texto login2 = new Caixa_de_Texto(tamanho_do_Botao, Largura_da_Tela / 2 - (tamanho_do_Botao / 2), Altura_da_Tela / 2 + 150, ref Fundo_Janela);
+            login1 = new Caixa_de_Texto(tamanho_do_Botao, Largura_da_Tela / 2 - (tamanho_do_Botao / 2), Altura_da_Tela / 2, ref Centro);
+            login2 = new Caixa_de_Texto(tamanho_do_Botao, Largura_da_Tela / 2 - (tamanho_do_Botao / 2), Altura_da_Tela / 2 + 150, ref Fundo_Janela);
 
 
             //pading caseiro kkk
@@ -283,8 +291,8 @@ namespace Klason_A
             System.Windows.Forms.Timer t = new System.Windows.Forms.Timer();
             t.Interval = 1;
             t.Start();
-            int som = 150;
-            int som01 = 1;
+            int som = 200;
+            int som01 = 20;
 
             t.Tick += (s, e) =>
             {
@@ -306,7 +314,6 @@ namespace Klason_A
 
         private void transiti(int i)
         {
-
             this.Close();
             Thread thread = new Thread(() =>
             {
@@ -314,6 +321,25 @@ namespace Klason_A
                 P.ShowDialog();
             });
             thread.Start();
+
+            /*
+            foreach (Aluno x in Program._alunos)
+            {
+                if (x.Email == login1.Text && x.Senha == login2.Text)
+                {
+                    this.Close();
+                    Thread thread = new Thread(() =>
+                    {
+                        Pagina_Inicial P = new Pagina_Inicial(i);
+                        P.ShowDialog();
+                    });
+                    thread.Start();
+                }
+            }
+            MessageBox.Show("Email ou Senhas Incorretos!");
+            
+            */
+
         }
     }
 }

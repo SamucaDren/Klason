@@ -8,6 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using Dominio;
+using Klason_A.Dominio;
 
 namespace Klason_A
 {
@@ -25,6 +27,9 @@ namespace Klason_A
         private Image imagem_Curso = Properties.Resources.IMGteste;
         private string descricao = "É com grande entusiasmo que convidamos vocês para se juntarem a nós em uma jornada fascinante pelo cosmos na nossa próxima aula de astronomia! vamos explorar os mistérios do universo e desvendar seus segredos mais profundos.";
 
+        private Curso _curso;
+
+
         public Form Form_Pai
         {
             set
@@ -33,8 +38,9 @@ namespace Klason_A
             }
         }
 
-        public PoupUp()
+        public PoupUp( Curso x)
         {
+            _curso = x;
             CriaPoupUp();
         }
 
@@ -108,19 +114,27 @@ namespace Klason_A
             Disp.ForClick.Click += (senders, e) => Abre_Curso();
 
             H1.Font = chave.H3_Font_Sub;
-            H1.Text = "Nome da Matéria";
+            H1.Text = _curso.Categoria;
             H1.Location = new Point(p, Img.Height + p);
             H1.ForeColor = chave.Preto;
             H1.AutoSize = true;
 
             H2.Font = chave.H3_Font;
             H2.Text = "Professor da Matéria";
+            foreach(Professor x in Program._professores)
+            {
+                if(x.ProfessorID == _curso.ProfessorID)
+                {
+                    H2.Text = x.Nome;
+                }
+            }
+
             H2.Location = new Point(p, Img.Height + 5 + p + H1.Height);
             H2.ForeColor = chave.Cinza;
             H2.AutoSize = true;
 
             preco.Font = chave.H3_Font_Sub;
-            preco.Text = "R$ 50,00";
+            preco.Text = _curso.Valor.ToString("R$ 00.00");
             preco.Location = new Point(p, Img.Height + H1.Height + p + H2.Height);
             preco.ForeColor = chave.Verde;
             preco.AutoSize = true;
