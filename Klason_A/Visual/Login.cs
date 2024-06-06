@@ -323,9 +323,9 @@ namespace Klason_A
             thread.Start();
 
             /*
-            foreach (Aluno x in Program._alunos)
+            foreach (Aluno LigaBanco in Program._alunos)
             {
-                if (x.Email == login1.Text && x.Senha == login2.Text)
+                if (LigaBanco.Email == login1.Text && LigaBanco.Senha == login2.Text)
                 {
                     this.Close();
                     Thread thread = new Thread(() =>

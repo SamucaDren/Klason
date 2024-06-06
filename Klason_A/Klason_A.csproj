@@ -63,6 +63,12 @@
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
     <Compile Include="Visual\Modulos\Notf.cs" />
+    <Compile Include="Visual\Perfil.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visual\Perfil.Designer.cs">
+      <DependentUpon>Perfil.cs</DependentUpon>
+    </Compile>
     <Compile Include="Visual\Pagina_Inicial.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +96,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Visual\Perfil.resx">
+      <DependentUpon>Perfil.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -129,6 +138,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Group 57Notify.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\png-transparent-computer-icons-profile-s-free-angle-sphere-profile-cliparts-free.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Firefly Pattern minimalista vetor azul claro aula escola 82028.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

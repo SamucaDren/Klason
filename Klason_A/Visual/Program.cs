@@ -1,6 +1,7 @@
 ﻿using Conect;
 using Dominio;
 using Klason_A.Dominio;
+using Klason_A.Visual.Modulos;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -71,10 +72,11 @@ namespace Klason_A
             _cursos = new List<Curso>();
 
             AtualizaBanco();
+            Aluno aluno = new Aluno();
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login());
+            Application.Run(new Perfil(1, aluno));
         }
         
     }

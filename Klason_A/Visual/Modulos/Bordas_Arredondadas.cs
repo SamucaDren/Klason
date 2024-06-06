@@ -10,6 +10,18 @@ using System.Windows.Forms;
 namespace Klason_A
 {
 
+    public class Panel2 : Panel
+    {
+        public Panel2()
+        {
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.UpdateStyles();
+        }
+
+    }
 
     public class Flow : FlowLayoutPanel
     {

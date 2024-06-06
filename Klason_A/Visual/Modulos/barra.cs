@@ -6,6 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
+using Dominio;
+using Klason_A.Visual;
+using Klason_A.Visual.Modulos;
 
 namespace Klason_A
 {
@@ -21,6 +25,7 @@ namespace Klason_A
         private Panel _logo = new Panel();
         private Label _area = new Label();
         private int info_op = 0;
+        int i;
 
         Form _form;
 
@@ -37,7 +42,9 @@ namespace Klason_A
         public Panel ParteInfo { get => _parte_Info; set => _parte_Info = value; }
 
         private void cria_barra(int i)
+
         {
+            this.i = i;
             // Crie um novo painel para a barra de fundo
             _fundo_Barra = new Panel();
             _fundo_Barra.Dock = DockStyle.Top;
@@ -72,11 +79,14 @@ namespace Klason_A
 
             
             _perfil.Size = new Size(38, 38);
-            _perfil.BackgroundImage = Properties.Resources.Perfil;
+            _perfil.BackgroundImage = Properties.Resources.Perfil_grande;
             _perfil.BackgroundImageLayout = ImageLayout.Stretch;
             _parte_Info.Controls.Add(_perfil);
             _perfil.Location = new Point(ParteInfo.Width - 80, 100 / 2 - 38 / 2);
-
+            _perfil.Click += (s, e) =>
+            {
+                abrePerfil();
+            };
             
             _info.Size = new Size(26, 26);
             _info.BackgroundImage = Properties.Resources.Info;
@@ -123,9 +133,10 @@ namespace Klason_A
             _logo.BackgroundImageLayout = ImageLayout.Stretch;
             _logo.Size = new Size(150, 25);
             _parte_Logo.Controls.Add(_logo);
+            _parte_Logo.BackColor = Color.Transparent;
+            _logo.BackColor = Color.Transparent;
             _logo.Location = new Point(ParteLogo.Width / 2 - _logo.Width / 2, ParteLogo.Height / 2 - _logo.Height / 2);
         }
-
         private void AbreInfo()
         {
             _fundoInfo = new RoundedPanel(40);
@@ -140,19 +151,16 @@ namespace Klason_A
             _fundoInfo.BackColor = chave.CinzaClaro;
             _fundoInfo.BringToFront();
 
-
-            //_fundoInfo.
-
-            _fundoInfo.Click += (s, e) =>
-            {
-                
-                //_form.Controls.Remove(x);
-                //_fundoInfo.Visible = false;
-            };
             Panel logo = new Panel();
             logo.BackgroundImage = Properties.Resources.Retângulo_2;
             logo.Size = new Size(150, 25);
             logo.BackgroundImageLayout = ImageLayout.Stretch;
+
+            logo.Click += (s, e) =>
+            {
+                abreHome();
+            };
+
 
             _fundoInfo.Controls.Add(logo);
             logo.Location = new Point(_fundoInfo.Width / 2 - logo.Width / 2, 20);
@@ -177,16 +185,47 @@ namespace Klason_A
 
             opcoe.Controls.Add(matriculados);
 
+            BotaoArredondado perfil = new BotaoArredondado();
+            perfil.Text = "Perfil";
+            perfil.Dock = DockStyle.Top;
+            perfil.Height = 50;
+            perfil.Font = chave.H4_Font;
+            perfil.FlatAppearance.BorderSize = 0;
+            perfil.FlatStyle = FlatStyle.Flat;
+            perfil.BackColor = chave.CinzaClaro;
 
+            opcoe.Controls.Add(perfil);
 
+            perfil.TextAlign = ContentAlignment.MiddleLeft;
+            matriculados.TextAlign = ContentAlignment.MiddleLeft;
 
-
-
+            perfil.Click += (s, e) =>
+            {
+                abrePerfil();
+            };
         }
-
-        private void x()
+        private void abrePerfil()
         {
-           
+            Thread x = new Thread(() =>
+            {
+                Aluno alAux = new Aluno();
+                Perfil p = new Perfil(i, alAux);
+                p.ShowDialog();
+            });
+            x.Start();
+            _form.Close();
         }
+        private void abreHome()
+        {
+            Thread x = new Thread(() =>
+            {
+                //Aluno alAux = new Aluno();
+                Pagina_Inicial p = new Pagina_Inicial(i);
+                p.ShowDialog();
+            });
+            x.Start();
+            _form.Close();
+        }
+
     }
 }

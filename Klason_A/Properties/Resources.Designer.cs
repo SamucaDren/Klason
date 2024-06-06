@@ -63,6 +63,16 @@ namespace Klason_A.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Capa_teste {
+            get {
+                object obj = ResourceManager.GetObject("Capa_teste", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Check {
             get {
                 object obj = ResourceManager.GetObject("Check", resourceCulture);
@@ -135,7 +145,17 @@ namespace Klason_A.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Perfil {
             get {
-                object obj = ResourceManager.GetObject("_perfil", resourceCulture);
+                object obj = ResourceManager.GetObject("Perfil", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Perfil_grande {
+            get {
+                object obj = ResourceManager.GetObject("Perfil_grande", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

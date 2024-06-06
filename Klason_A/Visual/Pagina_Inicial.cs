@@ -135,7 +135,7 @@ namespace Klason_A
             Scrool.VerticalScroll.Visible = false;
             Scrool.Dock = DockStyle.Top;
             Scrool.AutoSize = true;
-            x();
+            LigaBanco();
             teste.Click += (senders, e) => testepoup(Scrool);
 
         }
@@ -144,8 +144,8 @@ namespace Klason_A
 
             //PoupUp poup = new PoupUp();
             //poup.Form_Pai = this;
-            //x.Controls.Add(poup.P);
-            ////x.Name = "Teste";
+            //LigaBanco.Controls.Add(poup.P);
+            ////LigaBanco.Name = "Teste";
             
 
             Notf n = new Notf();
@@ -155,7 +155,7 @@ namespace Klason_A
             AreaNot.Controls.Add(y);
            AreaNot.Controls.Add(n.Fundo);
         }
-        private void x()
+        private void LigaBanco()
         {
             foreach (Curso c in Program._cursos)
             {
