@@ -15,7 +15,7 @@ namespace Conect
 
         public void Conectar()
         {
-            string aux = "SERVER=.\\SQLEXPRESS;Database=KlasonBanco;UID=usuárioKlason;PWD=123456";
+            string aux = "SERVER=.\\SQLEXPRESS;Integrated Security = True";
             conn.ConnectionString = aux;
             conn.Open();
             //string aux2= "Integrated Security=SSPI;TrustServerCertificate=True";
