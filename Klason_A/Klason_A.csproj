@@ -48,6 +48,12 @@
   <ItemGroup>
     <Compile Include="Repositorios\Conexao.cs" />
     <Compile Include="Dominio\Aluno.cs" />
+    <Compile Include="TESTETESTETESTE\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TESTETESTETESTE\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Visual\Modulos\barra.cs" />
     <Compile Include="Visual\Modulos\Bordas_Arredondadas.cs">
       <SubType>Component</SubType>
@@ -148,8 +154,6 @@
   <ItemGroup>
     <None Include="Resources\Firefly Pattern minimalista vetor azul claro aula escola 82028.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TESTETESTETESTE\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
