@@ -85,8 +85,7 @@ namespace Klason_A.Repositorios
             des.Location = new Point(AddImagem.Location.X, nome.Location.Y + nome.Height + 50);
 
             Caixa_de_Texto caixaNome = new Caixa_de_Texto(480, nome.Location.X+nome.Width+30,nome.Location.Y,ref fundo);
-            caixaNome.
-
+            caixaNome.Caixa.Location = new Point(nome.Location.X + nome.Width + 30, nome.Location.Y-caixaNome.Caixa.Height/4);
         }
 
         private Label crialabel(string tx)
