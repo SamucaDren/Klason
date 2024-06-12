@@ -4,20 +4,17 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using Dominio;
-using Klason_A.Visual;
 
-namespace Klason_A
+namespace Klason_A.Visual
 {
-    public partial class Login : Form
+    public partial class Cadastro : Form
     {
+
         Panel Fundo_janela;//fundo da janela
         private Panel _coluna01;//coluna Login01
 
@@ -28,7 +25,7 @@ namespace Klason_A
         Caixa_de_Texto login2;
 
 
-        public Login()
+        public Cadastro()
         {
             InitializeComponent();
 
@@ -63,45 +60,32 @@ namespace Klason_A
             int p = this.Size.Height;
 
             Fundo_janela.Controls.Clear();
-            
+
             _coluna01 = new Panel();
             _coluna01.Size = new Size(tamanho_do_Botao, 350);
-            
-            int centroX = (t-tamanho_do_Botao)/2;
-            int centroY = (p-_coluna01.Size.Height)/2;
-            _coluna01.Location = new System.Drawing.Point(centroX, centroY-50);
+
+            int centroX = (t - tamanho_do_Botao) / 2;
+            int centroY = (p - _coluna01.Size.Height) / 2;
+            _coluna01.Location = new System.Drawing.Point(centroX, centroY - 50);
             Fundo_janela.Controls.Add(_coluna01);
 
             //Criando Título
             Label H1 = new Label();
-            H1.Text = "Seja Bem Vindo!";
-            H1.TextAlign = ContentAlignment.MiddleCenter;
+            H1.Text = "Cadastro Aluno!";
+            H1.TextAlign = ContentAlignment.TopCenter;
             H1.Font = chave.H1_Font;
-            H1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             H1.Dock = DockStyle.Top;
             H1.Size = new Size(0, 100);
 
             int tam = 80;
 
-            //Botão Sou Professor
-            BotaoArredondado SouProf_ = CriaBotao01("SOU PROFESSOR");
-            SouProf_.Click += (sender, e) => transitio(2);
-            SouProf_.Dock = DockStyle.Top;
-
-            _coluna01.Controls.Add(SouProf_);
-
-            //Espaço01
-            Panel sep = new Panel();
-            sep.Dock = DockStyle.Top;
-            sep.Size = new Size(0, tam / 3);
-            _coluna01.Controls.Add(sep);
-
+            
             //Botão Sou Aluno
             BotaoArredondado SouAluno_ = CriaBotao01("SOU ALUNO");
             SouAluno_.Click += (sender, e) => transitio(1);
             SouAluno_.Dock = DockStyle.Top;
             _coluna01.Controls.Add(SouAluno_);
-            
+
 
             //Espaço02
             Panel sep2 = new Panel();
@@ -120,7 +104,7 @@ namespace Klason_A
             SouProf_.Radius = 80;
 
             SouProf_.Size = new Size(0, 80);
-            
+
             SouProf_.Text = txt;
             SouProf_.BackColor = Color.FromArgb(227, 238, 255);
             SouProf_.FlatAppearance.BorderSize = 0;
@@ -139,16 +123,16 @@ namespace Klason_A
             t.Tick += (s, e) =>
             {
 
-                _coluna01.Location = new Point(_coluna01.Location.X-(som+=20), _coluna01.Location.Y);
-                if(_coluna01.Location.X <0-_coluna01.Width-50)
+                _coluna01.Location = new Point(_coluna01.Location.X - (som += 20), _coluna01.Location.Y);
+                if (_coluna01.Location.X < 0 - _coluna01.Width - 50)
                 {
                     t.Stop();
                     login(i, Fundo_janela);
                 }
             };
-            
+
         }
-       
+
 
         private void login(int i, Panel Fundo_Janela)
         {
@@ -247,16 +231,16 @@ namespace Klason_A
             //Botões
             BotaoArredondado _entrar = CriaBotao01("ENTRAR");
             _entrar.Dock = DockStyle.Left;
-            _entrar.Click += (s, e) => { transiti(i);};
-            _entrar.Width = tamanho_do_Botao / 2-10;
-            _entrar.Radius = _entrar.Height-20;
+            _entrar.Click += (s, e) => { transiti(i); };
+            _entrar.Width = tamanho_do_Botao / 2 - 10;
+            _entrar.Radius = _entrar.Height - 20;
             espaco03.Controls.Add(_entrar);
 
 
             BotaoArredondado _cadastra = CriaBotao01("CADASTRAR");
             _cadastra.Dock = DockStyle.Right;
-            _cadastra.Click += (s, e) => { transitiCadastro(i); };//Ainda tenho que criar a tela de cadastro
-            _cadastra.Width = tamanho_do_Botao / 2-10;
+            _cadastra.Click += (s, e) => { };//Ainda tenho que criar a tela de cadastro
+            _cadastra.Width = tamanho_do_Botao / 2 - 10;
             _cadastra.Radius = _cadastra.Height - 20;
             espaco03.Controls.Add(_cadastra);
 
@@ -278,17 +262,17 @@ namespace Klason_A
             _back.Click += (sender, e) => Login_Inicio();
             Fundo_janela.Controls.Add(_back);
 
-          
 
-            
+
+
 
             Centro.Visible = false;
             Fundo_Janela.Controls.Add(Centro);
-            Centro.Location = new System.Drawing.Point(this.Width, this.Height/2 - Centro.Size.Height / 2);
+            Centro.Location = new System.Drawing.Point(this.Width, this.Height / 2 - Centro.Size.Height / 2);
             _back.Visible = true;
             _back.Location = new Point(0, 20);
             int centroX = (this.Width / 2 - Centro.Size.Width / 2);
-            int centroY = (this.Height / 2 - Centro.Size.Height / 2) ;
+            int centroY = (this.Height / 2 - Centro.Size.Height / 2);
             System.Windows.Forms.Timer t = new System.Windows.Forms.Timer();
             t.Interval = 1;
             t.Start();
@@ -297,13 +281,13 @@ namespace Klason_A
 
             t.Tick += (s, e) =>
             {
-                
+
                 while (_back.Location.X < 20)
                 {
                     _back.Location = new Point(_back.Location.X + (som01), _back.Location.Y);
                 }
 
-                Centro.Location = new Point(Centro.Location.X - (som-=9), Centro.Location.Y);
+                Centro.Location = new Point(Centro.Location.X - (som -= 9), Centro.Location.Y);
                 Centro.Visible = true;
                 if (Centro.Location.X <= centroX)
                 {
@@ -311,18 +295,6 @@ namespace Klason_A
                     t.Stop();
                 }
             };
-        }
-
-        private void transitiCadastro(int i)
-        {
-            this.Close();
-            Thread thread = new Thread(() =>
-            {
-                Cadastro c = new Cadastro();
-                c.ShowDialog();
-            });
-            thread.Start();
-
         }
 
         private void transiti(int i)

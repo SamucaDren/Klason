@@ -15,7 +15,7 @@ namespace Conect
 
         public void Conectar()
         {
-            string aux = "SERVER=.\\SQLEXPRESS;Database=KlasonBanco;UID=usuárioKlason;PWD=123456";
+            string aux = "SERVER=ANDERSON\\SQLEXPRESS;Database=KlasonBanco;Trusted_Connection=True;";
             conn.ConnectionString = aux;
             conn.Open();
             //string aux2= "Integrated Security=SSPI;TrustServerCertificate=True";
@@ -26,6 +26,7 @@ namespace Conect
             cmd.Connection = conn;
             cmd.CommandText = sql;
             cmd.ExecuteNonQuery();
+
         }
         public DataSet RetornaDataSet()
         {

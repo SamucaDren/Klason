@@ -76,7 +76,9 @@ namespace Klason_A
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Perfil(1, aluno));
+
+            Application.Run(new Login());
+            //Application.Run(new Perfil(1, aluno));
         }
         
     }
