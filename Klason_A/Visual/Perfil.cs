@@ -111,8 +111,6 @@ namespace Klason_A.Visual.Modulos
             _capa.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
-
-
         public void lado()
         {
             fundo_scrol.BackColor = Color.Transparent;

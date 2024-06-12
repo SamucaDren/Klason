@@ -126,15 +126,17 @@ namespace Klason_A
             Fundo_Janela.Controls.Add(Fundo_Galeria);
             Fundo_Galeria.Location = new Point(340 - 10, 140 - 10);
             Fundo_Galeria.Size = new Size(1155 + 20, 620 + 20);
-            Fundo_Galeria.AutoScroll = true;
+            //Fundo_Galeria.AutoScroll = true;
             Fundo_Galeria.VerticalScroll.Visible = false;
             Fundo_Galeria.HorizontalScroll.Visible = false;
-
-            //Scrool = new FlowLayoutPanel();
             Fundo_Galeria.Controls.Add(Scrool);
+            Scrool.AutoScroll = true;
+            Scrool.Size = Fundo_Galeria.Size;
+            Fundo_Galeria.Width -= 50;
+            Scrool.Location = new Point(0, 0);
             Scrool.VerticalScroll.Visible = false;
-            Scrool.Dock = DockStyle.Top;
-            Scrool.AutoSize = true;
+            //Scrool.Dock = DockStyle.Top;
+            Scrool.AutoScroll = true;
             LigaBanco();
             teste.Click += (senders, e) => testepoup(Scrool);
 

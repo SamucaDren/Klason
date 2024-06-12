@@ -66,6 +66,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Visual\Modulos\Botao.cs" />
+    <Compile Include="Visual\Modulos\CalendarioTeste.cs" />
     <Compile Include="Visual\Modulos\Cores_Fontes.cs" />
     <Compile Include="Dominio\Curso.cs" />
     <Compile Include="Dominio\Professor.cs" />
@@ -87,6 +88,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\AlunoRepositorio.cs" />
     <Compile Include="Repositorios\RepositorioPadrao.cs" />
+    <EmbeddedResource Include="Repositorios\CriarCurso.resx">
+      <DependentUpon>CriarCurso.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Visual\Pagina_Inicial.resx">
       <DependentUpon>Pagina_Inicial.cs</DependentUpon>
     </EmbeddedResource>

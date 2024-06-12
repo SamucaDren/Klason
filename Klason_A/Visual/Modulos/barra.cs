@@ -174,6 +174,18 @@ namespace Klason_A
 
             _fundoInfo.Controls.Add(opcoe);
 
+            BotaoArredondado sair = new BotaoArredondado();
+            sair.Text = "Sair";
+            sair.Dock = DockStyle.Top;
+            sair.Height = 50;
+            sair.Font = chave.H4_Font;
+            sair.FlatStyle = FlatStyle.Flat;
+            sair.BackColor = chave.CinzaClaro;
+            sair.FlatAppearance.BorderSize = 0;
+            opcoe.Controls.Add(sair);
+
+
+
             BotaoArredondado matriculados = new BotaoArredondado();
             matriculados.Text = "Cursos Matriculados";
             matriculados.Dock = DockStyle.Top;
@@ -196,13 +208,20 @@ namespace Klason_A
 
             opcoe.Controls.Add(perfil);
 
-            perfil.TextAlign = ContentAlignment.MiddleLeft;
-            matriculados.TextAlign = ContentAlignment.MiddleLeft;
 
             perfil.Click += (s, e) =>
             {
                 abrePerfil();
             };
+
+
+
+            sair.TextAlign = ContentAlignment.MiddleLeft;
+            perfil.TextAlign = ContentAlignment.MiddleLeft;
+            matriculados.TextAlign = ContentAlignment.MiddleLeft;
+
+
+
         }
         private void abrePerfil()
         {
@@ -221,6 +240,18 @@ namespace Klason_A
             {
                 //Aluno alAux = new Aluno();
                 Pagina_Inicial p = new Pagina_Inicial(i);
+                p.ShowDialog();
+            });
+            x.Start();
+            _form.Close();
+        }
+
+        private void sair()
+        {
+            Thread x = new Thread(() =>
+            {
+                //Aluno alAux = new Aluno();
+                Login P = new Login();
                 p.ShowDialog();
             });
             x.Start();

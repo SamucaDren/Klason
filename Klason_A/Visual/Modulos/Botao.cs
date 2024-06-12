@@ -12,7 +12,7 @@ namespace Klason_A
     {
         Cores_Fontes chave = new Cores_Fontes();
         private RoundedPanel Fundo_Texto = new RoundedPanel(42);
-        private TextBox textBox1 = new TextBox();
+        private RichTextBox textBox1 = new RichTextBox();
 
         public Caixa_de_Texto(int Largura, int X, int Y, ref Panel panel)
         {
@@ -45,8 +45,8 @@ namespace Klason_A
             Fundo_Texto.Size = new Size(Largura, 45);
             Fundo_Texto.TabIndex = 1;
 
+            //textBox1.AcceptsReturn = true;
 
-            textBox1.AcceptsReturn = true;
             textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             textBox1.BackColor = chave.Branco;
             textBox1.BorderStyle = BorderStyle.None;
@@ -57,6 +57,7 @@ namespace Klason_A
             textBox1.Margin = new Padding(10);
             textBox1.Size = new Size(Largura - 20, 23);
             textBox1.TabIndex = 0;
+
         }
     }
     internal class Botao
