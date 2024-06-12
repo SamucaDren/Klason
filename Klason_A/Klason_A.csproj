@@ -70,6 +70,12 @@
     <Compile Include="Visual\Modulos\Cores_Fontes.cs" />
     <Compile Include="Dominio\Curso.cs" />
     <Compile Include="Dominio\Professor.cs" />
+    <Compile Include="Visual\Modulos\Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visual\Modulos\Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
     <Compile Include="Visual\Modulos\Notf.cs" />
     <Compile Include="Visual\Perfil.cs">
       <SubType>Form</SubType>

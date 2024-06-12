@@ -183,7 +183,7 @@ namespace Klason_A
             sair.BackColor = chave.CinzaClaro;
             sair.FlatAppearance.BorderSize = 0;
             opcoe.Controls.Add(sair);
-
+            sair.Click += (s, e) => sairPagina();
 
 
             BotaoArredondado matriculados = new BotaoArredondado();
@@ -209,12 +209,7 @@ namespace Klason_A
             opcoe.Controls.Add(perfil);
 
 
-            perfil.Click += (s, e) =>
-            {
-                abrePerfil();
-            };
-
-
+            perfil.Click += (s, e) => abrePerfil();
 
             sair.TextAlign = ContentAlignment.MiddleLeft;
             perfil.TextAlign = ContentAlignment.MiddleLeft;
@@ -246,13 +241,13 @@ namespace Klason_A
             _form.Close();
         }
 
-        private void sair()
+        private void sairPagina()
         {
             Thread x = new Thread(() =>
             {
                 //Aluno alAux = new Aluno();
                 Login P = new Login();
-                p.ShowDialog();
+                P.ShowDialog();
             });
             x.Start();
             _form.Close();
