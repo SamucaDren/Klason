@@ -1,6 +1,7 @@
 ﻿using Conect;
 using Dominio;
 using Klason_A.Dominio;
+using Klason_A.Repositorios;
 using Klason_A.Visual.Modulos;
 using System;
 using System.Collections.Generic;
@@ -76,7 +77,9 @@ namespace Klason_A
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Perfil(1, aluno));
+
+            Application.Run(new CriarCurso(1));
+            //Application.Run(new Perfil(1, aluno));
         }
         
     }
