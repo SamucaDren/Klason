@@ -104,14 +104,31 @@ namespace Klason_A
             int p = 20;
             Img.Padding = new Padding(p, p, p, p);
 
-            Botao Disp = new Botao(Fundo, "VER DISPONIBILIDADE");
-            Disp.Caixa_Botao.Size = new Size(Fundo.Width - 40, 42);
-            Disp.Caixa_Botao.R = Disp.Caixa_Botao.Height;
-            Disp.Caixa_Botao.BackColor = chave.Verde;
-            Disp.ForClick.BackColor = chave.Verde;
-            Disp.ForClick.ForeColor = Color.White;
-            Disp.Caixa_Botao.Location = new Point(p, Fundo.Height - Disp.Caixa_Botao.Height - p);
-            Disp.ForClick.Click += (senders, e) => Abre_Curso();
+            //Botao Disp = new Botao(Fundo, "VER DISPONIBILIDADE");
+            //Disp.Caixa_Botao.Size = new Size(Fundo.Width - 40, 42);
+            //Disp.Caixa_Botao.R = Disp.Caixa_Botao.Height;
+            //Disp.Caixa_Botao.BackColor = chave.Verde;
+            //Disp.ForClick.BackColor = chave.Verde;
+            //Disp.ForClick.ForeColor = Color.White;
+            //Disp.Caixa_Botao.Location = new Point(p, Fundo.Height - Disp.Caixa_Botao.Height - p);
+            //Disp.ForClick.Click += (senders, e) => Abre_Curso();
+
+            
+            BotaoArredondado Disp = new BotaoArredondado();
+            Fundo.Controls.Add(Disp);
+            Disp.Size = new Size(Fundo.Width - 40, 42);
+            Disp.Radius = Disp.Height*2 -40;
+            Disp.Text = "VER DISPPONIBILIDADE";
+            Disp.BackColor = chave.Verde;
+            Disp.ForeColor = chave.Branco;
+            Disp.Location = new Point(p, Fundo.Height - Disp.Height - p);
+            Disp.Click += (senders, e) => Abre_Curso();
+            Disp.Font = chave.H3_Font_Sub;
+            Disp.FlatStyle = FlatStyle.Flat;   
+            Disp.FlatAppearance.BorderSize = 0;
+
+
+
 
             H1.Font = chave.H3_Font_Sub;
             H1.Text = _curso.Categoria;
