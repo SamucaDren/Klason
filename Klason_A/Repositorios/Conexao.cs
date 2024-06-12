@@ -15,7 +15,9 @@ namespace Conect
 
         public void Conectar()
         {
-            string aux = "SERVER=.\\SQLEXPRESS;Database=KlasonBanco;UID=usuárioKlason;PWD=123456";
+            string aux = "SERVER=.\\SQLEXPRESS;Integrated Security = True";
+            //string aux = "Server = tcp:klason.database.windows.net,1433; Initial Catalog = Klason; Persist Security Info = False; User ID = klasonadm; Password = Klason2024.; MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30";
+            
             conn.ConnectionString = aux;
             conn.Open();
             //string aux2= "Integrated Security=SSPI;TrustServerCertificate=True";

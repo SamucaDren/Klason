@@ -19,7 +19,13 @@ namespace Klason_A.Visual.Modulos
 
         private Panel fundo;
         private Cores_Fontes chave = new Cores_Fontes();
-        private barra Barra; 
+
+        private barra Barra;
+        Panel2 _capa = new Panel2();
+        RoundedPanel fundo_scrol = new RoundedPanel(10);
+        Panel _retangulo = new Panel();
+        RoundedPanel foto = new RoundedPanel(2);
+        Flow f = new Flow();
 
         public Perfil( int i, Aluno a)
         {
@@ -36,109 +42,100 @@ namespace Klason_A.Visual.Modulos
             fundo.Size = new Size(1920, 1080);
             Controls.Add(fundo);
 
-
-            fundo.BackColor = Color.Transparent;
-            Barra = new barra(i, this);
-            //Barra.Fundo.Dock = DockStyle.None;
-            Barra.Fundo.Width = this.Width*2;
-            
-            fundo.Controls.Add(Barra.Fundo);
-
+            adiciona_Barra(i);
+            parte_Perfil();
             lado();
+        }
+
+        private void adiciona_Barra( int i)
+        {
+            Barra = new barra(i, this);
+            Barra.Fundo.Width = this.Width * 2;
+            fundo.Controls.Add(Barra.Fundo);
+        }
+        private void parte_Perfil()
+        {
+            
+            int radius = 80;
+
+            //tamanho
+            _retangulo.Width = 250;
+            _retangulo.Height = 550;
+
+            //desenhando bordas
+            int larg = _retangulo.Width, alt = _retangulo.Height;
+            GraphicsPath path = new GraphicsPath();
+            path.AddLine(larg, 0, larg, alt - radius);
+            path.AddArc(larg - radius, alt - radius, radius, radius, 0, 90);
+            path.AddLine(larg - radius, alt, 0, alt);
+            path.AddLine(0, alt, 0, 0);
+            path.AddLine(0, 0, larg, 0);
+
+            path.CloseFigure();
+            _retangulo.Region = new Region(path);
+
+            //cor e localização
+            _retangulo.BackColor = Color.White;
+            fundo.Controls.Add(_retangulo);
+            _retangulo.Location = new Point(0, 0);
+            _retangulo.BringToFront();
+
+            
+            //Foto de perfil
+            int tam = 250;
+            foto.Size = new Size(tam, tam);
+            foto.Radius = tam;
+            fundo.Controls.Add(foto);
+            foto.BringToFront();
+            foto.Location = new Point(_retangulo.Location.X + _retangulo.Width - foto.Width / 2, _retangulo.Location.Y + _retangulo.Height / 2 - foto.Width / 2 + 60);
+            foto.BackgroundImage = Properties.Resources.Perfil_grande;
+            foto.BackgroundImageLayout = ImageLayout.Stretch;
+
+           
+            _capa.BackColor = chave.Vermelho;
+            _capa.Size = new Size(1180, foto.Height + radius * 2);
+
+            larg = _capa.Width; alt = _capa.Height;
+            fundo_scrol.Controls.Add(_capa);
+            _capa.Location = new Point(0, 0);
+            GraphicsPath bord = new GraphicsPath();
+            bord.AddArc(larg - radius, alt - radius, radius, radius, 0, 90);
+            bord.AddArc(0, alt - radius, radius, radius, 90, 90);
+            bord.AddArc(-200, alt / 2 - foto.Height / 2 - 30, foto.Height + 40, foto.Height + 40, 270, 180);
+            bord.AddArc(0, 0, radius, radius, 180, 90);
+            bord.AddArc(larg - radius, 0, radius, radius, 270, 90);
+
+            bord.CloseFigure();
+            _capa.Region = new Region(bord);
+            _capa.BackgroundImage = Properties.Resources.Capa_teste;
+            _capa.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
 
 
         public void lado()
         {
-            Panel ret = new Panel();
-  
-            int radius = 80;
-          
-            ret.Width = 250;
-            ret.Height = 550;
-
-            int larg = ret.Width, alt = ret.Height;
-            GraphicsPath path = new GraphicsPath();
-            path.AddLine(larg, 0, larg, alt-radius);
-            path.AddArc(larg - radius, alt - radius, radius, radius, 0, 90);
-            path.AddLine(larg-radius, alt, 0, alt);
-            path.AddLine(0, alt, 0, 0);
-            path.AddLine(0, 0, larg, 0);
-
-            path.CloseFigure();
-            ret.Region = new Region(path);
-            ret.BackColor = Color.White;
-            fundo.Controls.Add(ret);
-            ret.Location = new Point(0, 0);
-            ret.BringToFront();
-
-            RoundedPanel foto = new RoundedPanel(2);
-            foto.BackColor = chave.Verde;
-            int tam = 250;
-            foto.Size = new Size(tam, tam);
-            foto.Radius = tam;
-            fundo.Controls.Add(foto);
-            foto.BringToFront();
-            foto.Location = new Point(ret.Location.X+ret.Width-foto.Width/2, ret.Location.Y + ret.Height/2- foto.Width / 2+60);
-            foto.BackgroundImage = Properties.Resources.Perfil_grande;
-            foto.BackgroundImageLayout = ImageLayout.Stretch;
-
-            Panel2 capa = new Panel2();  
-            capa.BackColor = chave.Vermelho;
-            capa.Size = new Size(1180, foto.Height+radius*2);
-            
-            
-
-
-            RoundedPanel fundo_scrol = new RoundedPanel(10);
             fundo_scrol.BackColor = Color.Transparent;
             fundo_scrol.Height = 1000;
-            fundo_scrol.Width = capa.Width;
+            fundo_scrol.Width = _capa.Width;
 
             fundo.Controls.Add(fundo_scrol);
-            fundo_scrol.Location = new Point(ret.Width + 70, 140);
-
-            
-            
-
-
-            larg = capa.Width; alt = capa.Height;
-            fundo_scrol.Controls.Add(capa);
-            capa.Location = new Point(0, 0);
-            GraphicsPath bord = new GraphicsPath();
-            //bord.AddLine(larg, radius, larg, alt - radius);
-            bord.AddArc(larg - radius, alt - radius, radius, radius, 0, 90);
-            //bord.AddLine(larg - radius, alt, radius, alt);
-            bord.AddArc(0, alt - radius, radius, radius, 90, 90);
-            //bord.AddLine(0, alt-radius, 0, radius);
-            bord.AddArc(-200, alt / 2 - foto.Height / 2-30, foto.Height+40, foto.Height+40, 270, 180);
-            bord.AddArc(0, 0, radius, radius, 180, 90);
-            //bord.AddLine(radius, 0, larg-radius, 0);
-            bord.AddArc(larg - radius, 0, radius, radius, 270, 90);
-
-            bord.CloseFigure();
-            capa.Region = new Region(bord);
-            capa.BackgroundImage = Properties.Resources.Capa_teste;
-            capa.BackgroundImageLayout = ImageLayout.Stretch;
-            //ret.BackColor = Color.White;
-
+            fundo_scrol.Location = new Point(_retangulo.Width + 70, 140);
 
             Label H1 = new Label();
             H1.Text = "Cursos Matriculados";
             H1.Font = chave.H1_Font;
             fundo_scrol.Controls.Add(H1);
             H1.ForeColor = chave.Preto;
-            H1.Location = new Point(0, capa.Height + 50); ;
+            H1.Location = new Point(0, _capa.Height + 50); ;
             H1.BringToFront();
-  
             H1.AutoSize = true;
 
-            Flow f = new Flow();
+            
             fundo_scrol.Controls.Add(f);
             f.Location = new Point(H1.Location.X, H1.Location.Y+H1.Height+20);
             f.FlowDirection = FlowDirection.LeftToRight;
-            f.Width = capa.Width;
+            f.Width = _capa.Width;
             f.AutoSize = true;
             //f.BackColor = chave.Verde;
 
@@ -170,9 +167,5 @@ namespace Klason_A.Visual.Modulos
 
 
         }
-
-
-
-
     }
 }
