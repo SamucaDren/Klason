@@ -17,7 +17,7 @@ namespace Klason_A.Dominio
         public void Inserir()
         {
             Conexao c = new Conexao();
-            string c 
+           // string c 
         }
 
     }
