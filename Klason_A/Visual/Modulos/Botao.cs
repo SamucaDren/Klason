@@ -28,35 +28,37 @@ namespace Klason_A
         }
         public string Text
         {
-            get { return textBox1.Text; }
-            set { textBox1.Text = value; }
+            get { return TextBox.Text; }
+            set { TextBox.Text = value; }
         }
+
+        public RichTextBox TextBox { get => textBox1; set => textBox1 = value; }
 
         public void Altera_Cor(Color NovaCor)
         {
-            textBox1.BackColor = NovaCor;
+            TextBox.BackColor = NovaCor;
             Fundo_Texto.BackColor = NovaCor;
         }
         private void Criar(int Largura, int X, int Y)
         {
 
             Fundo_Texto.BackColor = chave.Branco;
-            Fundo_Texto.Controls.Add(textBox1);
+            Fundo_Texto.Controls.Add(TextBox);
             Fundo_Texto.Size = new Size(Largura, 45);
             Fundo_Texto.TabIndex = 1;
 
             //textBox1.AcceptsReturn = true;
 
-            textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            textBox1.BackColor = chave.Branco;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = chave.H3_Font;
-            textBox1.ForeColor = chave.Preto;
+            TextBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TextBox.BackColor = chave.Branco;
+            TextBox.BorderStyle = BorderStyle.None;
+            TextBox.Font = chave.H3_Font;
+            TextBox.ForeColor = chave.Preto;
             
-            textBox1.Location = new Point(20, 13);
-            textBox1.Margin = new Padding(10);
-            textBox1.Size = new Size(Largura - 20, 23);
-            textBox1.TabIndex = 0;
+            TextBox.Location = new Point(20, 13);
+            TextBox.Margin = new Padding(10);
+            TextBox.Size = new Size(Largura - 20, 23);
+            TextBox.TabIndex = 0;
 
         }
     }

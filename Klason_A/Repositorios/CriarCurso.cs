@@ -9,12 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Klason_A.Repositorios
 {
     public partial class CriarCurso : Form
     {
         Curso curso = new Curso();
+        List<Aula> aulas = new List<Aula>();
 
         private barra Barra;
         private Panel fundo;
@@ -139,27 +141,45 @@ namespace Klason_A.Repositorios
             {
                 foreach(DateTime t in calendario.Datas)
                 {
-                    Panel pd = new Panel();
-                    pd.Dock = DockStyle.Top;
-                    pd.Height = 15;
-                    preview.Controls.Add(pd);
-                    RoundedPanel itemAgenda = new RoundedPanel(20);
-                    itemAgenda.Dock = DockStyle.Top;
-                    itemAgenda.Height = 50;
-                    itemAgenda.BackColor = chave.CinzaClaro;
-                    preview.Controls.Add(itemAgenda);
-
-                    Label Tx = new Label();
-                    Tx.Text = $"Dia {t.Day} às {calendario.Hora}:{calendario.Minuto}\n{calendario.NomeMes(t.Month)}, de {t.Year}";
-                    Tx.AutoSize = true;
-                    Tx.Font = chave.H2_Notificacao;
-                    Tx.ForeColor = chave.Preto;
-                    Tx.Location = new Point(10, itemAgenda.Height / 2 - Tx.Height / 2-8);
-                    itemAgenda.Controls.Add(Tx);
-
+                    AddData(t);
                 }
                 calendario.Datas.Clear();
                 calendario.AdicionaDias();
+            };
+
+        }
+        private void AddData(DateTime day)
+        {
+            Panel lix = new Panel();
+            lix.Size = new Size(20, 20);
+            lix.BackgroundImage = Properties.Resources.Lixeira;
+            lix.BackgroundImageLayout = ImageLayout.Stretch;
+
+            Panel pd = new Panel();
+            pd.Dock = DockStyle.Top;
+            pd.Height = 15;
+            preview.Controls.Add(pd);
+            RoundedPanel itemAgenda = new RoundedPanel(20);
+            itemAgenda.Dock = DockStyle.Top;
+            itemAgenda.Height = 50;
+            itemAgenda.BackColor = chave.CinzaClaro;
+            preview.Controls.Add(itemAgenda);
+
+            Label Tx = new Label();
+            Tx.Text = $"Dia {day.Day} às {calendario.Hora}:{calendario.Minuto}\n{calendario.NomeMes(day.Month)} de {day.Year}";
+            Tx.AutoSize = true;
+            Tx.Font = chave.H2_Notificacao;
+            Tx.ForeColor = chave.Preto;
+            Tx.Location = new Point(10, itemAgenda.Height / 2 - Tx.Height / 2 - 8);
+            itemAgenda.Controls.Add(Tx);
+
+            itemAgenda.Controls.Add(lix);
+            lix.Location = new Point(itemAgenda.Width - lix.Width - 10, itemAgenda.Height / 2 - lix.Height / 2);
+            lix.BackColor = chave.CinzaClaro;
+            lix.Click += (s, e) =>
+            {
+                preview.Controls.Remove(itemAgenda);
+                preview.Controls.Remove(pd);
             };
 
         }
@@ -196,7 +216,105 @@ namespace Klason_A.Repositorios
             CadastrarCurso.Font = chave.H3_Font_Sub;
             fundo.Controls.Add(CadastrarCurso);
             CadastrarCurso.Location = new Point(AddImagem.Location.X, caixaDes.Caixa.Location.Y + caixaDes.Caixa.Height+pd);
+
+            CadastrarCurso.Click += (s, e) => { conclui(); };
         }
 
+
+        private void conclui()
+        {
+            FormArredondado Final = new FormArredondado();
+            Final.Text = "Concluir Cadastro";
+
+            Size TamTab = new Size(800, 600);
+            int pdi = 40;
+
+            Final.Size = TamTab;
+            Final.MaximumSize = TamTab; ;
+            Final.ShowInTaskbar = false;
+            Final.FormBorderStyle = FormBorderStyle.None;
+            Final.StartPosition = FormStartPosition.CenterParent;
+
+            Panel Fundo = new Panel();
+            Final.Controls.Add(Fundo);
+            Fundo.Dock = DockStyle.Fill;
+
+            BotaoArredondado back = new BotaoArredondado();
+            back.Size = new Size(40, 40);
+            back.BackColor = chave.Azul_Claro;
+            back.Radius = 40;
+            back.FlatStyle = FlatStyle.Flat;
+            back.FlatAppearance.BorderSize = 0;
+
+            back.Click += (senders, e) => Final.Close();
+            back.Text = "<";
+            back.Font = chave.H3_Font_Sub;
+            back.ForeColor = chave.Preto;
+            Fundo.Controls.Add(back);
+            back.Location = new Point(pdi / 2, pdi / 2);
+            
+            Label H1 = new Label();
+            H1.Text = "Concluindo Cadastro de Curso:";
+            H1.Font = chave.H2_Font;
+            H1.ForeColor = chave.Preto;
+            H1.AutoSize = true;
+            H1.Location = new Point(80, 80);
+            Fundo.Controls.Add(H1);
+
+            Label labelValor = crialabel("Valor da Mensalidade:");
+            Fundo.Controls.Add(labelValor);
+            labelValor.ForeColor = chave.Cinza;
+            labelValor.Location = new Point(H1.Location.X, H1.Location.Y + 80);
+
+            Label sifrao = new Label();
+            sifrao.Text = "R$";
+            sifrao.Font = chave.H3_Font;
+            sifrao.ForeColor = chave.Preto;
+            sifrao.AutoSize = true;
+            
+            Caixa_de_Texto Valor = new Caixa_de_Texto(200, 0, 0, ref Fundo);
+            Valor.TextBox.Location = new Point(40, Valor.TextBox.Location.Y);
+            Valor.Caixa.Controls.Add(sifrao);
+            sifrao.Location = new Point(10, Valor.TextBox.Location.Y);
+            Valor.Text = "00,00";
+            Valor.Caixa.Location = new Point(labelValor.Location.X + labelValor.Width + 100, labelValor.Location.Y - 15);
+
+            BotaoArredondado conc = new BotaoArredondado();
+            conc.Height = 50;
+            conc.FlatAppearance.BorderSize = 0;
+            conc.FlatStyle = FlatStyle.Flat;
+            conc.Radius = 50;
+            conc.Width = Final.Width - 80;
+            conc.BackColor = chave.Verde;
+            Fundo.Controls.Add(conc);
+            conc.Location = new Point(40, Fundo.Height - conc.Height);
+            conc.Text = "CONCLUIR";
+            conc.ForeColor = chave.Branco;
+            conc.Font = chave.H3_Font_Sub;
+            conc.Click += (s, e) =>
+            {
+                curso.Categoria = caixaNome.Text.Trim();
+                curso.Descricao = caixaDes.Text.Trim();
+                curso.ProfessorID = 4;
+                curso.ImgCapa = null;
+                curso.Valor = double.Parse(Valor.Text);
+                curso.Ativa();
+                curso.Inserir();
+                Program.AtualizaBanco();
+                Final.Close();
+            };
+
+            Label Qutd = crialabel("Quantidade Máxima de Alunos:");
+            Fundo.Controls.Add(Qutd);
+            Qutd.ForeColor = chave.Cinza;
+            Qutd.Location = new Point(H1.Location.X, labelValor.Location.Y + 80);
+
+            Caixa_de_Texto QuantidadeAlunos = new Caixa_de_Texto(200, 0, 0, ref Fundo);
+            QuantidadeAlunos.Caixa.Location = new Point(Valor.Caixa.Location.X, Valor.Caixa.Location.Y + 80);
+
+
+            Final.ShowDialog();
+
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace Klason_A
         public Font H3_Font_Sub { get { return new Font("Arial", 14F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
 
         public Font H4_Font { get { return new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0); } }
-
+        public Font H0_Font { get { return new Font("Arial", 60F, FontStyle.Regular, GraphicsUnit.Point, 0); } }
         public Panel AddFundo(Form X)
         {
             Cores_Fontes chave = new Cores_Fontes();

@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using Microsoft.Data.SqlClient;
 
 namespace Conect
 {
@@ -12,22 +13,22 @@ namespace Conect
     {
         SqlConnection conn = new SqlConnection();
         SqlCommand cmd = new SqlCommand();
+        //SqlConnection conn;
 
         public void Conectar()
         {
             string aux = "SERVER=.\\SQLEXPRESS;Integrated Security = True";
-            //string aux = "Server = tcp:klason.database.windows.net,1433; Initial Catalog = Klason; Persist Security Info = False; User ID = klasonadm; Password = Klason2024.; MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30";
-            
-            conn.ConnectionString = aux;
+            string x = "Server = tcp:klasonserver.database.windows.net,1433; Initial Catalog =KlasonBanco; Persist Security Info = False; User ID =usuarioKlason; Password =Klason2024.; MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30;";
+            conn.ConnectionString = x;
             conn.Open();
-            //string aux2= "Integrated Security=SSPI;TrustServerCertificate=True";
-            //Executar(aux2);
         }
         public void Executar(string sql)
         {
+            Conectar();
             cmd.Connection = conn;
             cmd.CommandText = sql;
             cmd.ExecuteNonQuery();
+            Desconectar();
         }
         public DataSet RetornaDataSet()
         {
@@ -48,6 +49,12 @@ namespace Conect
             DataTable cursotable = new DataTable("curso");
             adapter03.Fill(cursotable);
             ds.Tables.Add(cursotable);
+
+            SqlDataAdapter adapter04 = new SqlDataAdapter($"USE KlasonBanco; SELECT * FROM aula", conn);
+            DataTable aulatable = new DataTable("aula");
+            adapter04.Fill(aulatable);
+            ds.Tables.Add(aulatable);
+
             Desconectar();
 
             return ds;

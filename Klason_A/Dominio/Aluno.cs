@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Conect;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
@@ -26,6 +27,13 @@ namespace Dominio
         public void Desativa()
         {
             Status = "Inativo";
+        }
+
+
+        public void Inserir()
+        {
+            Conexao conn = new Conexao();
+            string aux = $"USE KlasonBanco; INSERT INTO ";
         }
 
     }

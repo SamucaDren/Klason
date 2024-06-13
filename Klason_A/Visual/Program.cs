@@ -26,6 +26,10 @@ namespace Klason_A
         static private Conexao conect = new Conexao();
         static public void AtualizaBanco()
         {
+            _alunos.Clear();
+            _professores.Clear();
+            _cursos.Clear();
+
             foreach (DataRow dr in conect.RetornaDataSet().Tables["aluno"].Rows)
             {
                 Aluno aluno = new Aluno();
