@@ -1,6 +1,7 @@
 ﻿using Conect;
 using Dominio;
 using Klason_A.Dominio;
+using Klason_A.Visual;
 using Klason_A.Visual.Modulos;
 using System;
 using System.Collections.Generic;

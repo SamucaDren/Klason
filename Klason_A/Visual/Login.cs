@@ -318,7 +318,7 @@ namespace Klason_A
             this.Close();
             Thread thread = new Thread(() =>
             {
-                Cadastro c = new Cadastro();
+                Cadastro c = new Cadastro(i);
                 c.ShowDialog();
             });
             thread.Start();

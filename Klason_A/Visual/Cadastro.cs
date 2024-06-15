@@ -9,40 +9,33 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Klason_A.Visual
 {
     public partial class Cadastro : Form
     {
-
-        Panel Fundo_janela;//fundo da janela
-        private Panel _coluna01;//coluna Login01
-
+        private Panel Fundo_janela;
+        private Panel _coluna01;
         readonly Cores_Fontes chave = new Cores_Fontes();
         private int Largura_da_Tela = 1920, Altura_da_Tela = 1080;
         private int tamanho_do_Botao = 500;
-        Caixa_de_Texto login1;
-        Caixa_de_Texto login2;
-
-
-        public Cadastro()
+        Caixa_de_Texto nome, email, telefone, senha;
+        int i;
+        public Cadastro(int i)
         {
             InitializeComponent();
-
-            this.DoubleBuffered = true;
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            this.SetStyle(ControlStyles.UserPaint, true);
-            this.UpdateStyles();
-
+            WindowState = FormWindowState.Maximized;
             AddFundo();
-            this.Size = new Size(Largura_da_Tela, Altura_da_Tela);
+            this.i = i;
 
-            Login_Inicio();
-            this.WindowState = FormWindowState.Maximized;
-        }
+            if (i == 1)
+                CadastrandoAluno();
 
-        //Para adicionar o fundo com o background na janela
+            }
+
         private void AddFundo()
         {
             Fundo_janela = new Panel();
@@ -51,59 +44,151 @@ namespace Klason_A.Visual
             Fundo_janela.BackgroundImageLayout = ImageLayout.Stretch;
             Fundo_janela.Dock = DockStyle.Fill;
             this.Controls.Add(Fundo_janela);
-        }
-
-        //Paginal Incial para escolher se é aluno ou professor
-        private void Login_Inicio()
-        {
-            int t = this.Size.Width;
-            int p = this.Size.Height;
-
-            Fundo_janela.Controls.Clear();
 
             _coluna01 = new Panel();
-            _coluna01.Size = new Size(tamanho_do_Botao, 350);
+            _coluna01.Size = new Size(tamanho_do_Botao, 650);
 
-            int centroX = (t - tamanho_do_Botao) / 2;
-            int centroY = (p - _coluna01.Size.Height) / 2;
-            _coluna01.Location = new System.Drawing.Point(centroX, centroY - 50);
+            int centroX = Largura_da_Tela / 2 - (tamanho_do_Botao / 2) ;
+            int centroY = Altura_da_Tela / 2 - 500;
+            _coluna01.Location = new Point(centroX, centroY + 80);
             Fundo_janela.Controls.Add(_coluna01);
+        }
 
-            //Criando Título
+        private void CadastrandoAluno()
+        {
+            // Criando Título
+            Panel botoes = new Panel();
             Label H1 = new Label();
-            H1.Text = "Cadastro Aluno!";
+
+            H1.Text = "Cadastro Aluno";
             H1.TextAlign = ContentAlignment.TopCenter;
             H1.Font = chave.H1_Font;
             H1.Dock = DockStyle.Top;
             H1.Size = new Size(0, 100);
-
-            int tam = 80;
-
-            
-            //Botão Sou Aluno
-            BotaoArredondado SouAluno_ = CriaBotao01("SOU ALUNO");
-            SouAluno_.Click += (sender, e) => transitio(1);
-            SouAluno_.Dock = DockStyle.Top;
-            _coluna01.Controls.Add(SouAluno_);
-
-
-            //Espaço02
-            Panel sep2 = new Panel();
-            sep2.Dock = DockStyle.Top;
-            sep2.Size = new Size(0, tam / 2);
-            _coluna01.Controls.Add(sep2);
-
-
-            _coluna01.BackColor = Color.Transparent;
             _coluna01.Controls.Add(H1);
+            _coluna01.BackColor = Color.Transparent;
+
+            // Adicionar Campo Nome
+            AdicionarCampo("Nome:", nome, 110);
+
+            // Adicionar Campo Email
+            AdicionarCampo("Email:", email, 190);
+
+            // Adicionar Campo Telefone
+            AdicionarCampo("Telefone:",  telefone, 270);
+
+            // Adicionar Campo Senha
+            AdicionarCampo("Senha:", senha, 350);
+
+
+            Panel caixaMaior = new Panel();
+            caixaMaior.Height = 90;
+            caixaMaior.Dock = DockStyle.Bottom;
+            _coluna01.Controls.Add(caixaMaior);
+
+
+            // Botão Cancelar
+            BotaoArredondado a = botao("CADASTRAR");
+            botoes.Controls.Add(a);
+            a.Dock = DockStyle.Right;
+           
+
+            BotaoArredondado e = botao("CANCELAR");
+            botoes.Controls.Add(e);
+            e.Dock = DockStyle.Left;
+
+
+            _coluna01.Controls.Add(botoes);
+            botoes.Height = 40;
+            botoes.Dock = DockStyle.Bottom;
+
+           
+
+
+            Panel logo = new Panel();
+            logo.BackgroundImage = Properties.Resources.Retângulo_2;
+            logo.BackgroundImageLayout = ImageLayout.Stretch;
+            Fundo_janela.Controls.Add(logo);
+            logo.Size = new Size(210, 36);
+            logo.Location = new Point(Largura_da_Tela/2 - logo.Width/2, 890);
+
+            }
+
+        private void AdicionarCampo(string labelText, Caixa_de_Texto campo, int top)
+        {
+            // Adicionar Label
+            Panel caixas = new Panel();
+            Panel txt = new Panel();
+            
+            Label lbl = new Label();
+            lbl.Text = labelText;
+            lbl.Font = chave.H4_Font;
+            lbl.Height = 40;
+            lbl.Dock = DockStyle.Top;
+            lbl.Location = new Point(10, top);
+            _coluna01.Controls.Add(lbl);
+
+            // Adicionar TextBox
+            campo = new Caixa_de_Texto(tamanho_do_Botao, 10, top + 30, ref caixas);
+            campo.Text = "Insira aqui";
+            campo.Caixa.Location = new Point(lbl.Location.X, lbl.Location.Y+lbl.Height+10);
+            campo.Caixa.Size = new Size(tamanho_do_Botao, 40);
+            campo.Caixa.Dock = DockStyle.Left;
+
+            txt.Controls.Add(campo.Caixa);
+            txt.Height = 40;
+            txt.Dock = DockStyle.Bottom;
+            
+
+            caixas.Controls.Add(lbl);
+            caixas.Controls.Add(txt);
+            //caixas.Location = new Point()
+            caixas.Dock = DockStyle.Bottom;
+            _coluna01.Controls.Add(caixas);
+            caixas.Height = 78;
+
+            Panel caixaMaior = new Panel();
+            caixaMaior.Height = 20;
+            caixaMaior.Dock = DockStyle.Bottom;
+            _coluna01.Controls.Add(caixaMaior);
+
+
+
+
         }
+
+        private BotaoArredondado botao(string texto)
+        {
+            BotaoArredondado _cadastra = CriaBotao01(texto);
+            _cadastra.Dock = DockStyle.Bottom;
+            _cadastra.Width = tamanho_do_Botao / 2 - 10;
+            _cadastra.Radius = 40;
+            return _cadastra;
+            //_cadastra.Size = new Size(tamanho_do_Botao / 2 -10, 40);
+
+        }
+
+
+
+        //private void botaoCancelar()
+        //{
+        //    BotaoArredondado _cancela = CriaBotao01("CANCELAR");
+        //    _cancela.Dock = DockStyle.Bottom;
+        //    _cancela.Width = tamanho_do_Botao / 2 - 10;
+        //    _cancela.Radius = 40;
+        //    _cancela.Controls.Add(_cancela);
+        //    //_cadastra.Size = new Size(tamanho_do_Botao / 2 -10, 40);
+
+        //}
+
+
 
         private BotaoArredondado CriaBotao01(string txt)
         {
             BotaoArredondado SouProf_ = new BotaoArredondado();
             SouProf_.Radius = 80;
 
-            SouProf_.Size = new Size(0, 80);
+            SouProf_.Size = new Size(tamanho_do_Botao / 2 - 10, 80);
 
             SouProf_.Text = txt;
             SouProf_.BackColor = Color.FromArgb(227, 238, 255);
@@ -114,217 +199,9 @@ namespace Klason_A.Visual
             return SouProf_;
         }
 
-        private void transitio(int i)
-        {
-            System.Windows.Forms.Timer t = new System.Windows.Forms.Timer();
-            t.Interval = 1;
-            t.Start();
-            int som = 200;
-            t.Tick += (s, e) =>
-            {
 
-                _coluna01.Location = new Point(_coluna01.Location.X - (som += 20), _coluna01.Location.Y);
-                if (_coluna01.Location.X < 0 - _coluna01.Width - 50)
-                {
-                    t.Stop();
-                    login(i, Fundo_janela);
-                }
-            };
-
-        }
-
-
-        private void login(int i, Panel Fundo_Janela)
-        {
-            // Limpa os controles dentro do Fundo_Janela
-            Fundo_Janela.Controls.Clear();
-
-            //Tamanho da Div do _coluna01
-            int tamanho_do_Botao = 500;
-
-
-            //Criação de um espaço no centro da tela
-            Panel Centro = new Panel();
-            Centro.Size = new Size(tamanho_do_Botao, 600);
-
-            //Criando Título
-            Label H1 = new Label();
-            H1.Text = "Olá ";
-            if (i == 1) { H1.Text += " Aluno!"; }
-            if (i == 2) { H1.Text += " Professor!"; }
-
-            H1.TextAlign = ContentAlignment.MiddleCenter;
-            H1.Font = chave.H1_Font;
-            H1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            H1.Dock = DockStyle.Top;
-            H1.Size = new Size(0, 80);
-
-            //Criando SubTitulo
-            Label H2 = new Label();
-            H2.Text = "Faça o seu login:";
-            H2.TextAlign = ContentAlignment.MiddleCenter;
-            H2.Font = chave.H2_Font;
-            H2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            H2.Dock = DockStyle.Top;
-            H2.Size = new Size(0, 50);
-            H2.ForeColor = chave.Preto;
-
-            //Craiando caixas de texto
-            login1 = new Caixa_de_Texto(tamanho_do_Botao, Largura_da_Tela / 2 - (tamanho_do_Botao / 2), Altura_da_Tela / 2, ref Centro);
-            login2 = new Caixa_de_Texto(tamanho_do_Botao, Largura_da_Tela / 2 - (tamanho_do_Botao / 2), Altura_da_Tela / 2 + 150, ref Fundo_Janela);
-
-
-            //pading caseiro kkk
-            int tam = 80;
-
-            Panel sep = new Panel();
-            sep.Dock = DockStyle.Top;
-            sep.Size = new Size(0, tam / 3);
-
-            Panel sep1 = new Panel();
-            sep1.Dock = DockStyle.Top;
-            sep1.Size = new Size(0, tam / 3);
-
-            Panel sep2 = new Panel();
-            sep2.Dock = DockStyle.Top;
-            sep2.Size = new Size(0, tam / 3);
-
-
-            //texto "E-mail:"
-            Label Text01 = new Label();
-            Text01.Text = "E-mail:";
-            Text01.Font = chave.H3_Font;
-            Text01.Location = new Point(Largura_da_Tela / 2 - (tamanho_do_Botao / 2), Altura_da_Tela / 2 - 40);
-            Text01.Dock = DockStyle.Top;
-
-            //Email
-            Panel espaco01 = new Panel();
-            espaco01.Controls.Add(Text01);
-            espaco01.Controls.Add(login1.Caixa);
-            login1.Caixa.Dock = DockStyle.Bottom;
-            espaco01.Dock = DockStyle.Top;
-            espaco01.Size = new Size(0, tam);
-            espaco01.Padding = new Padding(5);
-
-            //texto "Senha:"
-            Label Text02 = new Label();
-            Text02.Text = "Senha:";
-            Text02.Font = chave.H3_Font;
-            Text02.Location = new System.Drawing.Point(Largura_da_Tela / 2 - (tamanho_do_Botao / 2), Altura_da_Tela / 2 + 110);
-
-            //Senha
-            Panel espaco02 = new Panel();
-            espaco02.Controls.Add(Text02);
-            espaco02.Controls.Add(login2.Caixa);
-            Text02.Dock = DockStyle.Top;
-            login2.Caixa.Dock = DockStyle.Bottom;
-            espaco02.Dock = DockStyle.Top;
-            espaco02.Size = new Size(0, tam);
-            espaco02.Margin = new Padding(5);
-            espaco02.Padding = new Padding(5);
-
-            Panel espaco03 = new Panel();
-            espaco03.Dock = DockStyle.Top;
-            espaco03.Size = new Size(0, 60);
-            espaco01.BackColor = Color.Transparent;
-
-            //Botões
-            BotaoArredondado _entrar = CriaBotao01("ENTRAR");
-            _entrar.Dock = DockStyle.Left;
-            _entrar.Click += (s, e) => { transiti(i); };
-            _entrar.Width = tamanho_do_Botao / 2 - 10;
-            _entrar.Radius = _entrar.Height - 20;
-            espaco03.Controls.Add(_entrar);
-
-
-            BotaoArredondado _cadastra = CriaBotao01("CADASTRAR");
-            _cadastra.Dock = DockStyle.Right;
-            _cadastra.Click += (s, e) => { };//Ainda tenho que criar a tela de cadastro
-            _cadastra.Width = tamanho_do_Botao / 2 - 10;
-            _cadastra.Radius = _cadastra.Height - 20;
-            espaco03.Controls.Add(_cadastra);
-
-            //Adicionando na Div do _coluna01
-            Centro.Controls.Add(espaco03);
-            Centro.Controls.Add(sep1);
-            Centro.Controls.Add(espaco02);
-            Centro.Controls.Add(sep);
-            Centro.Controls.Add(espaco01);
-            Centro.Controls.Add(sep2);
-            Centro.Controls.Add(H2);
-            Centro.Controls.Add(H1);
-            Centro.BackColor = Color.Transparent;
-
-            BotaoArredondado _back = CriaBotao01("<");
-            _back.Size = new Size(80, 80);
-            //_back.Location = new Point(20, 20);
-            _back.Radius = 80;
-            _back.Click += (sender, e) => Login_Inicio();
-            Fundo_janela.Controls.Add(_back);
-
-
-
-
-
-            Centro.Visible = false;
-            Fundo_Janela.Controls.Add(Centro);
-            Centro.Location = new System.Drawing.Point(this.Width, this.Height / 2 - Centro.Size.Height / 2);
-            _back.Visible = true;
-            _back.Location = new Point(0, 20);
-            int centroX = (this.Width / 2 - Centro.Size.Width / 2);
-            int centroY = (this.Height / 2 - Centro.Size.Height / 2);
-            System.Windows.Forms.Timer t = new System.Windows.Forms.Timer();
-            t.Interval = 1;
-            t.Start();
-            int som = 200;
-            int som01 = 20;
-
-            t.Tick += (s, e) =>
-            {
-
-                while (_back.Location.X < 20)
-                {
-                    _back.Location = new Point(_back.Location.X + (som01), _back.Location.Y);
-                }
-
-                Centro.Location = new Point(Centro.Location.X - (som -= 9), Centro.Location.Y);
-                Centro.Visible = true;
-                if (Centro.Location.X <= centroX)
-                {
-                    Centro.Location = new Point(centroX, centroY);
-                    t.Stop();
-                }
-            };
-        }
-
-        private void transiti(int i)
-        {
-            this.Close();
-            Thread thread = new Thread(() =>
-            {
-                Pagina_Inicial P = new Pagina_Inicial(i);
-                P.ShowDialog();
-            });
-            thread.Start();
-
-            /*
-            foreach (Aluno LigaBanco in Program._alunos)
-            {
-                if (LigaBanco.Email == login1.Text && LigaBanco.Senha == login2.Text)
-                {
-                    this.Close();
-                    Thread thread = new Thread(() =>
-                    {
-                        Pagina_Inicial P = new Pagina_Inicial(i);
-                        P.ShowDialog();
-                    });
-                    thread.Start();
-                }
-            }
-            MessageBox.Show("Email ou Senhas Incorretos!");
-            
-            */
-
-        }
     }
 }
+
+
+
