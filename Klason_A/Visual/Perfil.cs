@@ -1,6 +1,9 @@
 ﻿using Dominio;
 using Klason_A.Dominio;
+using Klason_A.Repositorios;
+using Klason_A.TESTETESTETESTE;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -45,6 +48,12 @@ namespace Klason_A.Visual.Modulos
             adiciona_Barra(i);
             parte_Perfil();
             lado();
+
+
+            if(i == 2)
+            {
+                AddCurso();
+            }
         }
 
         private void adiciona_Barra( int i)
@@ -111,8 +120,6 @@ namespace Klason_A.Visual.Modulos
             _capa.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
-
-
         public void lado()
         {
             fundo_scrol.BackColor = Color.Transparent;
@@ -167,5 +174,48 @@ namespace Klason_A.Visual.Modulos
 
 
         }
+
+        public void AddCurso()
+        {
+            RoundedPanel add = new RoundedPanel(40);
+            add.Size = new Size(350, 420);
+            add.BackColor = chave.Cinza;
+
+            RoundedPanel centro = new RoundedPanel(200);
+            centro.Size = new Size(200, 200);
+            centro.BackColor = chave.CinzaClaro;
+            add.Controls.Add(centro);
+            centro.Location = new Point (add.Width/2-centro.Width/2, add.Height/2-centro.Height/2);
+
+            Label label = new Label();
+            label.Text = "+";
+            label.Font = chave.H0_Font;
+            label.AutoSize = true;
+            centro.Controls.Add(label);
+            label.Location = new Point (centro.Width/2-label.Width/2, centro.Height/2-label.Height/2);
+            label.ForeColor = chave.Cinza;
+
+
+            add.Click += (s, e) => AbreNovo();
+            centro.Click += (s, e) => AbreNovo();
+            label.Click += (s, e) => AbreNovo();
+
+
+            f.Controls.Add(add);
+        }
+
+        private void AbreNovo()
+            {
+            Thread x = new Thread(() =>
+            {
+                //Aluno alAux = new Aluno();
+                CriarCurso p = new CriarCurso();
+                p.ShowDialog();
+            });
+            x.Start();
+            this.Close();
+        }
+
+
     }
 }

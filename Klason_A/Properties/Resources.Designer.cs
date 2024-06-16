@@ -143,6 +143,16 @@ namespace Klason_A.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Lixeira {
+            get {
+                object obj = ResourceManager.GetObject("Lixeira", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Notify {
             get {
                 object obj = ResourceManager.GetObject("Notify", resourceCulture);
