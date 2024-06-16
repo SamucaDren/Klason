@@ -1,7 +1,7 @@
 ﻿using Dominio;
 using Klason_A.Dominio;
 using Klason_A.Repositorios;
-using Klason_A.TESTETESTETESTE;
+
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -29,6 +29,7 @@ namespace Klason_A.Visual.Modulos
         Panel _retangulo = new Panel();
         RoundedPanel foto = new RoundedPanel(2);
         Flow f = new Flow();
+        public Professor PerfilProf = new Professor();
 
         public Perfil( int i, Aluno a)
         {
@@ -48,7 +49,14 @@ namespace Klason_A.Visual.Modulos
             adiciona_Barra(i);
             parte_Perfil();
             lado();
+            if (i == 2)
+            {
 
+            }
+            this.FormClosed += (s, e) =>
+            {
+                this.Dispose();
+            };
 
             if(i == 2)
             {
@@ -146,14 +154,18 @@ namespace Klason_A.Visual.Modulos
             f.AutoSize = true;
             //f.BackColor = chave.Verde;
 
-            for(int i = 0; i< 5; i++)
-            {
-                Curso x = new Curso();
-                PoupUp p = new PoupUp(x);
-                // p.FormEscurecerTela = this;
-                p.Form_Pai = this;
-                f.Controls.Add(p.P);
 
+            //
+            PerfilProf.ProfessorID = 4;
+            foreach(Curso x in Program._cursos)
+            {
+                if (x.ProfessorID == PerfilProf.ProfessorID)
+                {
+                    PoupUp p = new PoupUp(x);
+                    p.IsProf = true;
+                    p.Form_Pai = this;
+                    f.Controls.Add(p.P);
+                }
             }
 
 
@@ -166,13 +178,6 @@ namespace Klason_A.Visual.Modulos
             {
                 foto.Visible = false;
             };
-
-
-
-
-
-
-
         }
 
         public void AddCurso()
@@ -209,10 +214,11 @@ namespace Klason_A.Visual.Modulos
             Thread x = new Thread(() =>
             {
                 //Aluno alAux = new Aluno();
-                CriarCurso p = new CriarCurso();
+                CriarCurso p = new CriarCurso(new Curso());
                 p.ShowDialog();
             });
             x.Start();
+            this.Dispose();
             this.Close();
         }
 

@@ -1,15 +1,21 @@
-﻿using Klason_A.Dominio;
+﻿using Conect;
+using GoogleCloudStorageExample;
+using Klason_A.Dominio;
 using Klason_A.Visual.Modulos;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+<<<<<<< Updated upstream
 using static System.Net.Mime.MediaTypeNames;
+=======
+
+>>>>>>> Stashed changes
 
 namespace Klason_A.Repositorios
 {
@@ -29,11 +35,26 @@ namespace Klason_A.Repositorios
         int pd = 30;
         RoundedPanel preview;
         BotaoArredondado CadastrarCurso;
+<<<<<<< Updated upstream
 
         public CriarCurso()
         {
             InitializeComponent();
 
+=======
+        private Professor prof = new Professor();
+        
+        public Curso CursoAtual;
+        private Label text;
+        private string caminhoImagem;
+        private int isNew;
+        internal Professor Prof { get => prof; set => prof = value; }
+        public int IsNew { set { isNew = value; }get { return isNew; } }
+        public CriarCurso(Curso x)
+        {
+            InitializeComponent();
+            CursoAtual = x;
+>>>>>>> Stashed changes
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -53,8 +74,104 @@ namespace Klason_A.Repositorios
             AdicionaBotao();
             AdicionaPreview();
 
+            this.FormClosed += (s, e) =>
+            {
+                this.Dispose();
+            };
 
         }
+<<<<<<< Updated upstream
+=======
+        private async Task adcionaImagem()
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            using (ofd)
+            {
+                ofd.Filter = "Image files (*.jpg, *.jpeg, *.png) | *.jpg; *.jpeg; *.png";
+
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    // Processo para carregar a imagem
+                    string filePath = ofd.FileName;
+                    try
+                    {
+                        if (!string.IsNullOrEmpty(ofd.FileName))
+                        {
+                            // Validar extensão e diretório
+                            if (ofd.FileName.EndsWith(".jpg") || ofd.FileName.EndsWith(".png"))
+                            {
+                                AddImagem.BackgroundImage = null;
+                                string extensao = Path.GetExtension(ofd.FileName);
+                                string pastaDocumentos = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                                string pasta = Path.Combine(pastaDocumentos, "Klason");
+
+                                if (!Directory.Exists(pasta))
+                                    Directory.CreateDirectory(pasta);
+
+                                string destino = Path.Combine(pasta, $"{Program._cursos.Last().CursoID + 1}{extensao}");
+
+                                try
+                                {
+                                    using (System.Drawing.Image imagemOriginal = System.Drawing.Image.FromFile(ofd.FileName))
+                                    {
+
+                                        int altura = AddImagem.Width * imagemOriginal.Height / imagemOriginal.Width;
+                                        using (System.Drawing.Image imagemRedimensionada = RedimensionarImagem(imagemOriginal, AddImagem.Width, altura))
+                                        {
+
+                                            if (File.Exists(destino))
+                                            {
+                                                AddImagem.BackgroundImage = null;
+                                                System.Drawing.Image.FromFile(caminhoImagem)?.Dispose();
+                                                GC.Collect();
+                                                GC.WaitForPendingFinalizers();
+                                                File.Delete(destino);
+                                                AddImagemIcon.Visible = false;
+                                                text.Visible = false;
+                                            }
+                                            await Task.Run(() => imagemRedimensionada.Save(destino));
+                                            caminhoImagem = destino;
+                                        }
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show($"Erro ao copiar imagem: {ex.Message}");
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Arquivo inválido. Selecione um arquivo de imagem (.jpg ou .png).");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nenhum arquivo selecionado.");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erro ao carregar a imagem: {ex.Message}");
+                    }
+                }
+            }
+            AddImagem.BackgroundImage = System.Drawing.Image.FromFile(caminhoImagem);
+
+            this.FormClosed += (s, e) =>
+            {
+                if (File.Exists(caminhoImagem))
+                {
+                    AddImagem.BackgroundImage = null;
+                    System.Drawing.Image.FromFile(caminhoImagem)?.Dispose();
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    File.Delete(caminhoImagem);
+                }
+
+            };
+            ofd.Dispose();
+        }
+>>>>>>> Stashed changes
         private void adiciona_Barra()
         {
             Barra = new barra(2, this);
@@ -68,7 +185,7 @@ namespace Klason_A.Repositorios
             AddImagem.Width = 1200;
 
             AddImagem.BackColor = chave.Branco;
-            AddImagem.Location = new Point(315, 100+pd);
+            AddImagem.Location = new Point(315, 100 + pd);
 
             AddImagemIcon = new Panel();
             AddImagem.Controls.Add(AddImagemIcon);
@@ -77,29 +194,54 @@ namespace Klason_A.Repositorios
             AddImagemIcon.BackgroundImage = Properties.Resources.Down;
             AddImagemIcon.Location = new Point(AddImagem.Width / 2 - AddImagemIcon.Width / 2, AddImagem.Height / 2 - AddImagemIcon.Height / 2 - pd);
 
+<<<<<<< Updated upstream
             Label text = new Label();
+=======
+            AddImagemIcon.BackColor = Color.Transparent;
+
+            
+            AddImagem.Click += (s, e) =>
+            {
+                try
+                {
+                    adcionaImagem();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erro ao abrir o diálogo: {ex.Message}");
+                }
+            };
+
+            text = new Label();
+>>>>>>> Stashed changes
             text.Text = "Selecione imagem\npara capa.";
             text.TextAlign = ContentAlignment.MiddleCenter;
             text.ForeColor = chave.Cinza;
             text.Font = chave.H3_Font_Sub;
             text.AutoSize = true;
-
+            text.BackColor = Color.Transparent;
             AddImagem.Controls.Add(text);
 
-            text.Location = new Point(AddImagem.Width / 2 - text.Width / 2, AddImagemIcon.Location.Y+AddImagemIcon.Height+pd);
+            text.Location = new Point(AddImagem.Width / 2 - text.Width / 2, AddImagemIcon.Location.Y + AddImagemIcon.Height + pd);
         }
         private void AdicionaFormulario()
         {
             Label nome = crialabel("Nome do curso:");
             fundo.Controls.Add(nome);
             nome.Location = new Point(AddImagem.Location.X, AddImagem.Location.Y + AddImagem.Height + pd);
-            
+
             Label des = crialabel("Descrição:");
             fundo.Controls.Add(des);
             des.Location = new Point(AddImagem.Location.X, nome.Location.Y + nome.Height + pd);
 
+<<<<<<< Updated upstream
             caixaNome = new Caixa_de_Texto(480, 0, 0,ref fundo);
             caixaNome.Caixa.Location = new Point(nome.Location.X + nome.Width + pd, nome.Location.Y-caixaNome.Caixa.Height/4);
+=======
+            caixaNome = new Caixa_de_Texto(480, 0, 0, ref fundo);
+            fundo.Controls.Add(caixaNome.Caixa);
+            caixaNome.Caixa.Location = new Point(nome.Location.X + nome.Width + pd, nome.Location.Y - caixaNome.Caixa.Height / 4);
+>>>>>>> Stashed changes
 
             caixaDes = new Caixa_de_Texto(480, 0, 0, ref fundo);
             caixaDes.Caixa.Height = 180;
@@ -123,11 +265,11 @@ namespace Klason_A.Repositorios
             calendario = new CalendarioTeste();
             fundo.Controls.Add(calendario.Fundo);
             calendario.Fundo.Location = new Point(caixaNome.Caixa.Location.X + caixaNome.Caixa.Width + pd, caixaNome.Caixa.Location.Y);
-            calendario.Fundo.Height = caixaDes.Caixa.Location.Y + caixaDes.Caixa.Height - caixaNome.Caixa.Location.Y+80;
+            calendario.Fundo.Height = caixaDes.Caixa.Location.Y + caixaDes.Caixa.Height - caixaNome.Caixa.Location.Y + 80;
             BotaoArredondado ad = new BotaoArredondado();
             ad.Text = ">";
             ad.Radius = 40;
-            ad.Size = new Size(40,40);
+            ad.Size = new Size(40, 40);
             ad.TextAlign = ContentAlignment.MiddleCenter;
             ad.BackColor = chave.Verde;
             ad.FlatAppearance.BorderSize = 0;
@@ -139,7 +281,7 @@ namespace Klason_A.Repositorios
 
             ad.Click += (s, e) =>
             {
-                foreach(DateTime t in calendario.Datas)
+                foreach (DateTime t in calendario.Datas)
                 {
                     AddData(t);
                 }
@@ -150,6 +292,20 @@ namespace Klason_A.Repositorios
         }
         private void AddData(DateTime day)
         {
+<<<<<<< Updated upstream
+=======
+            Diponibilidade n = new Diponibilidade();
+            day = day.AddHours(calendario.Hora);
+            day = day.AddMinutes(calendario.Minuto);
+            n.Dia = day;
+            n.ProfessorID = 4;
+            horasDispo.Add(n);
+
+
+            n.Dia = day;
+
+
+>>>>>>> Stashed changes
             Panel lix = new Panel();
             lix.Size = new Size(20, 20);
             lix.BackgroundImage = Properties.Resources.Lixeira;
@@ -190,8 +346,8 @@ namespace Klason_A.Repositorios
             preview.Width = 284;
             preview.BackColor = chave.Branco;
             preview.Height = calendario.Fundo.Height;
-            preview.Padding = new Padding(pd/2, 50, pd / 2, pd/2);
-            preview.Location = new Point(calendario.Fundo.Location.X + calendario.Fundo.Width+pd/2, calendario.Fundo.Location.Y);
+            preview.Padding = new Padding(pd / 2, 50, pd / 2, pd / 2);
+            preview.Location = new Point(calendario.Fundo.Location.X + calendario.Fundo.Width + pd / 2, calendario.Fundo.Location.Y);
             preview.AutoScroll = true;
 
             Label h1 = new Label();
@@ -208,16 +364,16 @@ namespace Klason_A.Repositorios
             CadastrarCurso.Text = "CADASTRAR CURSO";
             CadastrarCurso.ForeColor = chave.Branco;
             CadastrarCurso.BackColor = chave.Verde;
-            CadastrarCurso.FlatAppearance.BorderSize = 0;   
+            CadastrarCurso.FlatAppearance.BorderSize = 0;
             CadastrarCurso.FlatStyle = FlatStyle.Flat;
             CadastrarCurso.Height = 50;
             CadastrarCurso.Width = 675;
             CadastrarCurso.Radius = 50;
             CadastrarCurso.Font = chave.H3_Font_Sub;
             fundo.Controls.Add(CadastrarCurso);
-            CadastrarCurso.Location = new Point(AddImagem.Location.X, caixaDes.Caixa.Location.Y + caixaDes.Caixa.Height+pd);
+            CadastrarCurso.Location = new Point(AddImagem.Location.X, caixaDes.Caixa.Location.Y + caixaDes.Caixa.Height + pd);
 
-            CadastrarCurso.Click += (s, e) => { conclui(); };
+            CadastrarCurso.Click += (s, e) => { conclui();};
         }
 
 
@@ -252,7 +408,7 @@ namespace Klason_A.Repositorios
             back.ForeColor = chave.Preto;
             Fundo.Controls.Add(back);
             back.Location = new Point(pdi / 2, pdi / 2);
-            
+
             Label H1 = new Label();
             H1.Text = "Concluindo Cadastro de Curso:";
             H1.Font = chave.H2_Font;
@@ -271,7 +427,7 @@ namespace Klason_A.Repositorios
             sifrao.Font = chave.H3_Font;
             sifrao.ForeColor = chave.Preto;
             sifrao.AutoSize = true;
-            
+
             Caixa_de_Texto Valor = new Caixa_de_Texto(200, 0, 0, ref Fundo);
             Valor.TextBox.Location = new Point(40, Valor.TextBox.Location.Y);
             Valor.Caixa.Controls.Add(sifrao);
@@ -293,6 +449,14 @@ namespace Klason_A.Repositorios
             conc.Font = chave.H3_Font_Sub;
             conc.Click += (s, e) =>
             {
+<<<<<<< Updated upstream
+=======
+                foreach (Diponibilidade di in horasDispo)
+                {
+                    di.Inserir();
+                }
+
+>>>>>>> Stashed changes
                 curso.Categoria = caixaNome.Text.Trim();
                 curso.Descricao = caixaDes.Text.Trim();
                 curso.ProfessorID = 4;
@@ -311,10 +475,99 @@ namespace Klason_A.Repositorios
 
             Caixa_de_Texto QuantidadeAlunos = new Caixa_de_Texto(200, 0, 0, ref Fundo);
             QuantidadeAlunos.Caixa.Location = new Point(Valor.Caixa.Location.X, Valor.Caixa.Location.Y + 80);
+<<<<<<< Updated upstream
 
 
             Final.ShowDialog();
 
         }
+=======
+            Final.ShowDialog();
+
+        }
+        private System.Drawing.Image RedimensionarImagem(System.Drawing.Image imagemOriginal, int largura, int altura)
+        {
+            Bitmap imagemRedimensionada = new Bitmap(largura, altura);
+
+            using (Graphics g = Graphics.FromImage(imagemRedimensionada))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.DrawImage(imagemOriginal, 0, 0, largura, altura);
+            }
+
+            return ComprimirImagem(imagemRedimensionada, 1000);
+        }
+
+        private void Atualiza()
+        { 
+                string nomeArquivo = $"{CursoAtual.ImgCapa}.png";
+                string pastaDocumentos = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string pasta = Path.Combine(pastaDocumentos, "Klason");
+                string destino = Path.Combine(pasta, nomeArquivo);
+
+                if (CursoAtual.ImgCapa != null && CursoAtual.ImgCapa != DBNull.Value.ToString())
+                {
+                    if (!File.Exists(destino))
+                    {
+                        AddNoDrive c = new AddNoDrive();
+                        Console.WriteLine($"Iniciando download do arquivo {CursoAtual.ImgCapa} para o destino {destino}.");
+                        Thread baixa = new Thread(() =>
+                        {
+                            c.download(CursoAtual.ImgCapa, destino);
+                            AddImagem.BackgroundImage = Image.FromFile(destino);
+                            AddImagemIcon.Visible = false;
+                            text.Visible = false;
+                        });
+                        baixa.Start();
+                    }
+                    
+                    else { AddImagem.BackgroundImage = Image.FromFile(destino); }
+                }
+                caixaNome.TextBox.Text = CursoAtual.Categoria;
+                caixaDes.TextBox.Text = CursoAtual.Descricao;
+          
+        }
+        public static System.Drawing.Image ComprimirImagem(System.Drawing.Image imagem, long tamanhoMaximoKB)
+        {
+            long tamanhoMaximoBytes = tamanhoMaximoKB * 1024;
+            ImageCodecInfo codecInfo = GetEncoderInfo("image/jpeg");
+            EncoderParameters encoderParams = new EncoderParameters(1);
+            MemoryStream ms = new MemoryStream();
+
+            for (long qualidade = 100; qualidade > 0; qualidade -= 5)
+            {
+                ms.SetLength(0);
+                encoderParams.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, qualidade);
+                imagem.Save(ms, codecInfo, encoderParams);
+
+                if (ms.Length < tamanhoMaximoBytes)
+                {
+                    break;
+                }
+            }
+
+            return System.Drawing.Image.FromStream(ms);
+        }
+
+        private static ImageCodecInfo GetEncoderInfo(string mimeType)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.MimeType == mimeType)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }
+
+        private void CriarCurso_Load(object sender, EventArgs e)
+        {
+            
+                Atualiza();
+            
+        }
+>>>>>>> Stashed changes
     }
 }

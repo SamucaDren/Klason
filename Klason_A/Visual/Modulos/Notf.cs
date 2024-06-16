@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dominio;
+using Klason_A.Dominio;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
@@ -15,6 +17,7 @@ namespace Klason_A
         private Label H1 = new Label();
         private Label H2 = new Label();
         Cores_Fontes chave = new Cores_Fontes();
+        public Aula aula = new Aula();
 
         private string _titulo = "Nome da Matéria";
         private string _descricao = "Descrição da Mensagem";
@@ -26,6 +29,29 @@ namespace Klason_A
             CriaNot();
         }
 
+        public void AddAula()
+        {
+            string cursoname = " ";
+            foreach (Curso curso in Program._cursos)
+            {
+                if(curso.CursoID == aula.CursoID)
+                {
+                    cursoname = curso.Categoria;
+                }
+            }
+            H1.Text = cursoname;
+            string nome =  " ";
+            foreach(Aluno x in Program._alunos)
+            {
+                if(x.AlunoID == aula.AlunoID)
+                {
+                    nome = x.Nome;
+                }
+            }
+            string aux = $"Dia {aula.Dia.Day}/{aula.Dia.Month}/{aula.Dia.Year}\nAluno: {nome}";
+            H2.Text = aux;
+        }
+
         private void CriaNot()
         {
             _fundo.Height = 100;
@@ -35,7 +61,7 @@ namespace Klason_A
             _fundo.Controls.Add(icon);
             icon.Height = 28;
             icon.Width = 28;
-            icon.BackgroundImage = Properties.Resources.Notify;
+            icon.BackgroundImage = Properties.Resources.event_available_24dp_FILL0_wght400_GRAD0_opsz24;
             icon.BackgroundImageLayout = ImageLayout.Stretch;
             icon.Location = new System.Drawing.Point(10, _fundo.Height/2 - icon.Height/2);
 

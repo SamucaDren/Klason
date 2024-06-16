@@ -56,12 +56,20 @@
     <Compile Include="Repositorios\CriarCurso.Designer.cs">
       <DependentUpon>CriarCurso.cs</DependentUpon>
     </Compile>
+<<<<<<< Updated upstream
     <Compile Include="TESTETESTETESTE\Class1.cs" />
     <Compile Include="TESTETESTETESTE\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TESTETESTETESTE\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+=======
+    <Compile Include="Visual\Cadastro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visual\Cadastro.Designer.cs">
+      <DependentUpon>Cadastro.cs</DependentUpon>
+>>>>>>> Stashed changes
     </Compile>
     <Compile Include="Visual\Modulos\barra.cs" />
     <Compile Include="Visual\Modulos\Bordas_Arredondadas.cs">
@@ -170,5 +178,26 @@
   <ItemGroup>
     <None Include="Resources\Lixeira.png" />
   </ItemGroup>
+<<<<<<< Updated upstream
+=======
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 e x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\menu_open_24dp_FILL0_wght400_GRAD0_opsz24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\event_available_24dp_FILL0_wght400_GRAD0_opsz24.png" />
+  </ItemGroup>
+>>>>>>> Stashed changes
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

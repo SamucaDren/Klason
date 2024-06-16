@@ -47,6 +47,10 @@ namespace Klason_A
             Notificacoes(fundo);
             Thread aux = new Thread(() => Galeria(fundo)); ;
             aux.Start();
+            this.FormClosed += (s, e) =>
+            {
+                this.Dispose();
+            };
 
 
         }
@@ -92,17 +96,22 @@ namespace Klason_A
             path.CloseFigure();
             Parte_Info.Region = new Region(path);
             Parte_Info.BackColor = Color.White;
-
+            Panel panel = new Panel();
+            
             AreaNot = new Panel();
             NotName.Font = chave.H2_Font;
             NotName.ForeColor = chave.Preto;
             Parte_Info.Controls.Add(NotName);
-            Parte_Info.Controls.Add(AreaNot);
+            Parte_Info.Controls.Add(panel);
             NotName.Location = new Point(20, 40);
             NotName.Text = "Notificações";
             NotName.AutoSize = true;
-            AreaNot.Location = new Point(20, NotName.Location.Y + NotName.Height + 20);
-            AreaNot.Size = new Size(Parte_Info.Width-40, Parte_Info.Height-AreaNot.Location.X);
+
+            panel.Location = new Point(20, NotName.Location.Y + NotName.Height + 20);
+            panel.Size = new Size(Parte_Info.Width - 40, Parte_Info.Height - AreaNot.Location.X);
+            panel.Controls.Add(AreaNot);
+            AreaNot.Location = new Point(0,0);
+            AreaNot.Size = new Size(panel.Width+18, panel.Height);
             //AreaNot.BackColor = chave.Azul_Claro;
             AreaNot.Height = Fundo_Janela.Height +180;
             AreaNot.AutoScroll = true;
@@ -141,32 +150,57 @@ namespace Klason_A
             teste.Click += (senders, e) => testepoup(Scrool);
 
         }
-        private void testepoup(FlowLayoutPanel x)
+        private void LigaNot()
         {
+            foreach(Curso c in Program._cursos)
+            {
+                if(c.ProfessorID == 4)
+                {
+                    foreach (Aula au in Program._aulas)
+                    {
+                        if (au.CursoID == c.CursoID)
+                        {
+                            Panel x = new Panel();
+                            x.Dock = DockStyle.Top;
+                            x.Height = 20;
+                            AreaNot.Controls.Add(x);
+                            Notf notf = new Notf();
+                            notf.aula = au;
+                            notf.AddAula();
+                            AreaNot.Controls.Add(notf.Fundo);
 
-            //PoupUp poup = new PoupUp();
-            //poup.Form_Pai = this;
-            //LigaBanco.Controls.Add(poup.P);
-            ////LigaBanco.Name = "Teste";
-            
 
+<<<<<<< Updated upstream
             Notf n = new Notf();
             Panel y = new Panel();
             y.Height = 10;
             y.Dock = DockStyle.Top;
             AreaNot.Controls.Add(y);
            AreaNot.Controls.Add(n.Fundo);
+=======
+                        }
+
+                    }
+                }
+
+            } 
+>>>>>>> Stashed changes
         }
         private void LigaBanco()
         {
             foreach (Curso c in Program._cursos)
             {
-                PoupUp cursox = new PoupUp(c);
-                cursox.NomeMateria = c.Categoria;
-                cursox.Descricao = c.Descricao;
-                cursox.Form_Pai = this;
-                Scrool.Controls.Add(cursox.P);
+                if(c.Status == "Ativo")
+                {
+                    PoupUp cursox = new PoupUp(c);
+                    cursox.NomeMateria = c.Categoria;
+                    cursox.Descricao = c.Descricao;
+                    cursox.Form_Pai = this;
+                    Scrool.Controls.Add(cursox.P);
+                }
+
             }
+            LigaNot();
         }
     }
 }

@@ -19,6 +19,17 @@ namespace Klason_A.Dominio
             Conexao c = new Conexao();
            // string c 
         }
+        public void Deletar()
+        {
+            // Supondo que você tenha uma classe Conexao que gerencie a conexão com o banco de dados
+            Conexao conn = new Conexao();
+
+            // Montando o comando SQL para deletar o aluno com base no ID
+            string aux = $"USE KlasonBanco; DELETE FROM disponibilidade WHERE DataDisponivelID= {DisponibilidadeID};";
+
+            // Executando o comando SQL
+            conn.Executar(aux);
+        }
 
     }
 }

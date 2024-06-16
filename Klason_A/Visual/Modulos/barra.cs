@@ -35,6 +35,8 @@ namespace Klason_A
         {
             _form = x;
             cria_barra(i);
+
+
         }
 
         public Panel Fundo { get => _fundo_Barra; set => _fundo_Barra = value; }

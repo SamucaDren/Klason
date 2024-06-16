@@ -10,6 +10,21 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using Dominio;
 using Klason_A.Dominio;
+<<<<<<< Updated upstream
+=======
+using Klason_A.Visual.Modulos;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Drive.v3;
+using Google.Apis.Services;
+using Google.Apis.Util.Store;
+using GoogleCloudStorageExample;
+using System.IO;
+using System.Runtime.ConstrainedExecution;
+using System.Security.Cryptography;
+using System.Runtime.Remoting.Lifetime;
+using Klason_A.Repositorios;
+using Microsoft.Extensions.DependencyInjection;
+>>>>>>> Stashed changes
 
 namespace Klason_A
 {
@@ -28,7 +43,90 @@ namespace Klason_A
         private string descricao = "É com grande entusiasmo que convidamos vocês para se juntarem a nós em uma jornada fascinante pelo cosmos na nossa próxima aula de astronomia! vamos explorar os mistérios do universo e desvendar seus segredos mais profundos.";
 
         private Curso _curso;
+        private BotaoArredondado Disp;
+        private bool ISPROF;
+        private List<Diponibilidade> marcados = new List<Diponibilidade>();
+        public bool IsProf
+        {
+            set
+            {
+                ISPROF = value;
+                if (value == true)
+                {
+                    isProf();
+                }
+            }
+            get
+            {
+                return ISPROF;
+            }
+        }
+        private void isProf()
+        {
+            Panel p = new Panel();
+            p.BackgroundImage = Properties.Resources.menu_open_24dp_FILL0_wght400_GRAD0_opsz24;
+            p.BackgroundImageLayout = ImageLayout.Stretch;
+            p.Size = new Size(28, 28);
+            Fundo.Controls.Add(p);
+            p.BringToFront();
+            p.Location = new Point(Fundo.Width - 50,268);
 
+            p.Click += (s, e) =>
+            {
+
+                opcoes();
+            };
+
+        }
+        private void opcoes()
+        {
+            RoundedPanel fun = new RoundedPanel(50);
+            fun.BackColor = chave.CinzaClaro;
+            fun.Size = new Size(200, 200);
+            formPai.Controls.Add(fun);
+            fun.BringToFront();
+            fun.Location = new Point(Cursor.Position.X-fun.Width/2, Cursor.Position.Y-fun.Height/2);
+
+            fun.Padding = new Padding(20);
+            Button exlui = new Button();
+            exlui.FlatAppearance.BorderSize = 0;
+            exlui.FlatStyle = FlatStyle.Flat;
+            exlui.Dock = DockStyle.Top;
+            exlui.BackColor = chave.Branco;
+            exlui.Text = "Exluir";
+            exlui.Font = chave.H3_Font_Sub;
+            fun.Controls.Add(exlui);
+            exlui.Height = 40;
+            exlui.Click += (s, e) => { _curso.Deletar();Program.AtualizaBanco();formPai.Controls.Remove(fun);Fundo.Visible = false ; };
+            Button inativa = new Button();
+            if(_curso.Status == "Ativo")
+            {
+                inativa.Dock = DockStyle.Top;
+                inativa.BackColor = chave.Branco;
+                inativa.Text = "Inativar";
+                inativa.Font = chave.H3_Font_Sub;
+                inativa.Click += (s, e) => { _curso.Desativa(); _curso.Atualizar(); Fundo.BackColor = chave.CinzaClaro; };
+                fun.Controls.Add(inativa);
+                inativa.Height = 40;
+
+            }
+            else
+            {
+                inativa.Dock = DockStyle.Top;
+                inativa.BackColor = chave.Branco;
+                inativa.Text = "Ativar";
+                inativa.Font = chave.H3_Font_Sub;
+                inativa.Click += (s, e) => { _curso.Ativa(); _curso.Atualizar(); Fundo.BackColor = chave.Branco; };
+                fun.Controls.Add(inativa);
+                inativa.Height = 40;
+            }
+            fun.MouseLeave += (s, e) =>
+            {
+                if (!fun.ClientRectangle.Contains(fun.PointToClient(Control.MousePosition)))
+                    formPai.Controls.Remove(fun);
+            };
+
+        }
 
         public Form Form_Pai
         {
@@ -90,14 +188,48 @@ namespace Klason_A
             Fundo.Size = new Size(353, 418);
             Fundo.Location = new Point(500, 150);
             Fundo.BackColor = Color.White;
-            Cores_Fontes chave = new Cores_Fontes();
-
+            if(_curso.Status == "Inativo")
+            {
+                Fundo.BackColor = chave.CinzaClaro;
+            }
+            
             Fundo.Controls.Add(Img);
             Img.BackColor = chave.Azul_Claro;
             Img.Size = new Size(Fundo.Width - 2, 251);
             Img.Location = new Point(1, 1);
-
             Img.Controls.Add(pict);
+<<<<<<< Updated upstream
+=======
+
+            string nomeArquivo = $"{_curso.ImgCapa}.png";
+            string pastaDocumentos = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string pasta = Path.Combine(pastaDocumentos, "Klason");
+
+            if (!Directory.Exists(pasta))
+            {
+                Directory.CreateDirectory(pasta);
+            }
+
+            string destino = Path.Combine(pasta, nomeArquivo);
+
+            if (_curso.ImgCapa != null && _curso.ImgCapa != DBNull.Value.ToString())
+            {
+                if (!File.Exists(destino))
+                {
+                    AddNoDrive c = new AddNoDrive();
+                    Console.WriteLine($"Iniciando download do arquivo {_curso.ImgCapa} para o destino {destino}.");
+                    Thread baixa = new Thread(() =>
+                    {
+                        c.download(_curso.ImgCapa, destino);
+                        imagem_Curso = Image.FromFile(destino);
+                    });
+                    baixa.Start();
+                }
+
+                else { imagem_Curso = Image.FromFile(destino); }
+            }
+
+>>>>>>> Stashed changes
             pict.BackgroundImage = imagem_Curso;
             pict.BackgroundImageLayout = ImageLayout.Stretch;
             pict.Dock = DockStyle.Fill;
@@ -114,7 +246,7 @@ namespace Klason_A
             //Disp.ForClick.Click += (senders, e) => Abre_Curso();
 
             
-            BotaoArredondado Disp = new BotaoArredondado();
+            Disp = new BotaoArredondado();
             Fundo.Controls.Add(Disp);
             Disp.Size = new Size(Fundo.Width - 40, 42);
             Disp.Radius = Disp.Height*2 -40;
@@ -164,9 +296,18 @@ namespace Klason_A
 
         public void Abre_Curso()
         {
+<<<<<<< Updated upstream
             FormArredondado Curso = new FormArredondado();
             curso_aberto(Curso);
            
+=======
+            if (IsProf != true)
+            {
+                FormArredondado Curso = new FormArredondado();
+                curso_aberto(Curso);
+            }
+;
+>>>>>>> Stashed changes
         }
 
         public void curso_aberto(FormArredondado janela)
@@ -236,6 +377,7 @@ namespace Klason_A
             H3.Location = new Point(pdi - 10, H2.Location.Y + pdi-10);
 
 
+<<<<<<< Updated upstream
             Botao Disp = new Botao(Fundo, "AGENDAR AULA");
             Fundo.Controls.Add(Disp.Caixa_Botao);
             Disp.Caixa_Botao.Size = new Size(480, 60);
@@ -243,6 +385,30 @@ namespace Klason_A
             Disp.ForClick.BackColor = chave.Verde;
             Disp.ForClick.ForeColor = Color.White;
             Disp.Caixa_Botao.Location = new Point(50-10, H3.Location.Y+H3.Height+pdi);
+=======
+            Disp.Font = chave.H3_Font_Sub;
+            Disp.FlatStyle = FlatStyle.Flat;
+            Disp.FlatAppearance.BorderSize = 0;
+            Disp.Size = new Size(450, 60);
+            Disp.Radius = 60;
+            Disp.BackColor = chave.Verde;
+            Disp.ForeColor = Color.White;
+            Disp.Location = new Point(50-10, H3.Location.Y+H3.Height+pdi);
+            Disp.Text = "AGENDAR AULA";
+            Disp.Click += (s, e) =>
+            {
+                foreach(Diponibilidade x in marcados)
+                {
+                    Aula au = new Aula();
+                    au.CursoID = _curso.CursoID;
+                    au.AlunoID = Program.UserAluno.AlunoID;
+                    au.Dia = x.Dia;
+                    au.Inserir();
+                    x.Deletar();
+                }
+                Program.AtualizaBanco();
+            };
+>>>>>>> Stashed changes
             
             RoundedPanel Horas = new RoundedPanel(40);
             FlowLayoutPanel horarios = new FlowLayoutPanel();
@@ -253,7 +419,18 @@ namespace Klason_A
             Horas.Size = new Size(lr+20, 280);
             Horas.Location = new Point(Disp.Caixa_Botao.Location.X-20 + Disp.Caixa_Botao.Width + pdi, Disp.Caixa_Botao.Location.Y+Disp.Caixa_Botao.Height-Horas.Height);
             horarios.BackColor = Color.White;
+<<<<<<< Updated upstream
             cria_horario(horarios, 20, "Março", "18h", "21h");
+=======
+            
+            foreach(Diponibilidade d in Program._diponibilidades)
+            {
+                if(d.ProfessorID == prof.ProfessorID)
+                {
+                    cria_horario(horarios,d, lr);
+                }
+            }
+>>>>>>> Stashed changes
             SaveFileDialog nova = new SaveFileDialog();
 
             Thread t = new Thread(() =>
@@ -295,6 +472,7 @@ namespace Klason_A
                 {
                     H1.ForeColor = Color.White;
                     Fundo.BackColor = chave.Verde;
+                    marcados.Add(disp);
                     icon.BackgroundImage = Properties.Resources.Check;
                     i= 1;
                 }
@@ -302,6 +480,7 @@ namespace Klason_A
                 {
                     H1.ForeColor = chave.Cinza;
                     Fundo.BackColor = chave.CinzaClaro;
+                    marcados.Remove(disp);
                     icon.BackgroundImage = Properties.Resources.Hora;
                     i = 0;
                 }
@@ -354,7 +533,6 @@ namespace Klason_A
                 es.Close();
             };
             es.ShowDialog();
-
         }
     }
 }

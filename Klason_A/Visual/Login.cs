@@ -42,6 +42,11 @@ namespace Klason_A
 
             Login_Inicio();
             this.WindowState = FormWindowState.Maximized;
+
+            this.FormClosed += (s, e) =>
+            {
+                this.Dispose();
+            };
         }
 
         //Para adicionar o fundo com o background na janela
@@ -246,9 +251,36 @@ namespace Klason_A
             //Botões
             BotaoArredondado _entrar = CriaBotao01("ENTRAR");
             _entrar.Dock = DockStyle.Left;
+<<<<<<< Updated upstream
             _entrar.Click += (s, e) => { transiti(i);};
             _entrar.Width = tamanho_do_Botao / 2-10;
             _entrar.Radius = _entrar.Height-20;
+=======
+            _entrar.Click += (s, e) => { 
+                if(i == 1)
+                {
+                    int autent = 0;
+                    foreach (Aluno x in Program._alunos)
+                    {
+                        if (x.Email == caixaEmail.TextBox.Text && x.Senha == caixaSenha.TextBox.Text)
+                        {
+                            Program.UserAluno = x;
+                            autent++;
+                            transiti(i, x);
+                            
+                        }
+                    }
+                    if(autent == 0)
+                    {
+                        MessageBox.Show("Usuário não encontrado. Tente novamente.");
+                    }
+                        
+                }
+                
+            };
+            _entrar.Width = tamanho_do_Botao / 2 - 10;
+            _entrar.Radius = _entrar.Height - 20;
+>>>>>>> Stashed changes
             espaco03.Controls.Add(_entrar);
 
 
